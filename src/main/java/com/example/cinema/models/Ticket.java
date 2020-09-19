@@ -2,6 +2,7 @@ package com.example.cinema.models;
 
 import javax.persistence.*;
 
+@Entity(name = "tickets")
 public class Ticket {
 
     @Id

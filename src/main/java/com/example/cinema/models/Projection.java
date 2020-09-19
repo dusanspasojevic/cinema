@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "projections")
 public class Projection {
 
     @Id

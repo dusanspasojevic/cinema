@@ -6,8 +6,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 public class Controller {
 
-    @RequestMapping("/")
-    public String index() {
-        return "Mile";
-    }
 }

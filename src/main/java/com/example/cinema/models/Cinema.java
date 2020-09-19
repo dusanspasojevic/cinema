@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "cinemas")
 public class Cinema {
 
     @Id
@@ -22,7 +22,7 @@ public class Cinema {
     @Column
     private String phone;
 
-    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<MovieHall> theaters = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.DETACH)
@@ -32,7 +32,7 @@ public class Cinema {
     )
     List<User> managers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Projection> projections = new ArrayList<>();
 
     public Cinema(long id, String name, String address, String email, String phone, List<MovieHall> theaters, List<User> managers, List<Projection> projections) {

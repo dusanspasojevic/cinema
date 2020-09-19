@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "users")
 public class User {
     @Id
     private String username;
@@ -37,7 +37,7 @@ public class User {
     @Column
     private Boolean active;
 
-    @ManyToMany(mappedBy = "managers")
+    @ManyToMany()
     private List<Cinema> cinemas = new ArrayList<>();
 
     public User() {

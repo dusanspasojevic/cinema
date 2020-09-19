@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "movies")
 public class Movie {
     @Id
     private String title;
@@ -18,10 +18,10 @@ public class Movie {
     @Column
     private int duration;
 
-    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Projection> projections = new ArrayList<>();
 
-    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vote> votes = new ArrayList<>();
 
     public Movie() {
