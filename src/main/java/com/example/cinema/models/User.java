@@ -20,6 +20,14 @@ public class User {
     @Column
     private String firstName;
 
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
     @Column
     private String lastName;
 

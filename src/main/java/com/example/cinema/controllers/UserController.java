@@ -52,6 +52,14 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @PostMapping("/managers/{id}")
+    public ResponseEntity<?> createManager(@RequestBody User request) throws Exception{
+        Map<String, String> res = new HashMap<>();
+        userService.createManager(request);
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
     @GetMapping("/me")
     public ResponseEntity<?> getInfo(HttpSession session) {
         Map<String, String> res = new HashMap<>();
