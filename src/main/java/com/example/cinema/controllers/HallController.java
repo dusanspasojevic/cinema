@@ -60,7 +60,7 @@ public class HallController {
             return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
 
         hallService.deleteHall(id);
-        
+
         return new ResponseEntity<>("", HttpStatus.OK);
 
     }

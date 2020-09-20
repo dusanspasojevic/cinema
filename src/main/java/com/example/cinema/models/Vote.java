@@ -52,6 +52,8 @@ public class Vote {
         this.movie = movie;
     }
 
+    public Vote(){};
+
     public Vote(String id, int vote, Spectator spectator, Movie movie) {
         this.id = id;
         this.vote = vote;

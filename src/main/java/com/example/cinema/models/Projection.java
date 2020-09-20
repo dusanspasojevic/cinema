@@ -10,7 +10,7 @@ import java.util.List;
 public class Projection {
 
     @Id
-    private String id;
+    private int id;
 
     @Column
     private Date dateTime;
@@ -21,8 +21,6 @@ public class Projection {
     @Column
     private int price;
 
-    @Column
-    private int reservedTickets;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
@@ -32,14 +30,14 @@ public class Projection {
     @JoinColumn(name = "hall_id")
     private MovieHall hall;
 
-    public Projection() { this.reservedTickets = 0; }
+    public Projection() { }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -67,13 +65,6 @@ public class Projection {
         this.price = price;
     }
 
-    public int getReservedTickets() {
-        return reservedTickets;
-    }
-
-    public void setReservedTickets(int reservedTickets) {
-        this.reservedTickets = reservedTickets;
-    }
 
     public Movie getMovie() {
         return movie;

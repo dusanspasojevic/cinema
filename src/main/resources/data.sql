@@ -3,7 +3,8 @@ insert into users(mydtype, email,username, password, first_name, last_name, phon
 ('users', 'admin2@yahoo.com', 'ad2' ,'123', 'Admin2', 'Admin2', '062-531-546', '1997-02-02', 'ADMIN', 'true'),
 ('users', 'm1@yahoo.com', 'm1' ,'123', 'Manager1', 'Manager1', '063-765-432', '1996-03-03', 'MANAGER', 'true'),
 ('users', 'm2@yahoo.com', 'm2' ,'123', 'Manager2', 'Manager2', '064-643-785', '1995-04-04', 'MANAGER', 'true'),
-('users', 'viewer1@yahoo.com', 'sp1' ,'123', 'Viewer1', 'Viewer1', '065-742-923', '1994-05-05', 'SPECTATOR', 'true');
+('users', 'viewer1@yahoo.com', 'sp1' ,'123', 'Viewer1', 'Viewer1', '065-742-923', '1994-05-05', 'SPECTATOR', 'true'),
+('users', 'viewer222@yahoo.com', 'sp2' ,'123', 'Viewer2', 'Viewer2', '065-742-923', '1994-05-05', 'SPECTATOR', 'true');
 
 insert into cinema(id, name, address, email, phone) values
 (1, 'Cinema1', 'Address1', 'c1@yahoo.com', '064-346-443'),
@@ -21,4 +22,41 @@ insert into moviehalls(id, label, capacity, cinema_id) values
 (2,'VM12', 20, 2),
 (3,'BIG ROOM', 20, 3),
 (4,'Theater2', 40, 1),
-(5,'Theater3', 10, 1);
+(5,'Theater3', 10, 1),
+(6,'Theater5', 50, 2);
+
+
+insert into movies(title, description, duration, genre) values
+('Movie name1', 'Opis1', 60, 'KOMEDIJA'),
+('Movie 2', 'Opis2', 90, 'KOMEDIJA'),
+('Movie 3', 'Opis3', 120, 'AKCIJA'),
+('Movie 4', 'Opis4', 60, 'HOROR'),
+('Movie 5', 'Opis5', 120, 'TRILER' ),
+('Movie 7', 'Opis7', 90, 'AKCIJA'),
+('Movie 8', 'Opis8', 120, 'NAUCNA FANTASTIKA');
+
+insert into projections(id, date_time, not_reserved_seats, price, hall_id, movie_id) values
+(1, '2020-08-11T10:00:00', 50, 150, 1, 'Movie name1'),
+(2, '2020-08-11T11:30:00', 50, 200, 1, 'Movie name1'),
+(3, '2020-09-11T13:00:00', 50, 250, 1, 'Movie 2'),
+(4, '2020-09-11T15:00:00', 50, 250, 1, 'Movie 2'),
+(5, '2020-09-11T17:00:00', 50, 300, 1, 'Movie 2'),
+(6, '2020-09-11T19:00:00', 50, 350, 1, 'Movie 3'),
+(7, '2020-09-11T21:30:00', 50, 400, 1, 'Movie 3'),
+
+(8, '2020-09-11T13:30:00', 40, 200, 4, 'Movie 4'),
+(9, '2020-09-11T15:00:00', 40, 200, 4, 'Movie 4'),
+(10, '2020-09-11T16:30:00', 40, 250, 4, 'Movie 4'),
+(11, '2020-09-11T18:00:00', 40, 300, 4, 'Movie 7'),
+(12, '2020-09-11T20:00:00', 40, 350, 4, 'Movie 8'),
+
+(13, '2020-09-11T16:30:00', 10, 250, 5, 'Movie 5'),
+(14, '2020-09-11T19:00:00', 10, 300, 5, 'Movie 5'),
+(15, '2020-09-11T21:30:00', 10, 300, 5, 'Movie 4');
+
+
+insert into votes(id, vote, movie_id, spectator_id) values
+(1, 1, 'Movie 5', 'sp1'),
+(2, 4, 'Movie name1', 'sp1'),
+(3, 3, 'Movie name1', 'sp2'),
+(4, 5, 'Movie 3', 'sp2');
