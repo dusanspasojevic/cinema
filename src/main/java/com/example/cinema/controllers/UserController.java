@@ -52,12 +52,12 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PostMapping("/managers/{id}")
+    @PostMapping("/managers")
     public ResponseEntity<?> createManager(@RequestBody User request) throws Exception{
         Map<String, String> res = new HashMap<>();
         userService.createManager(request);
 
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @GetMapping("/me")

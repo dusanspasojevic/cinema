@@ -46,54 +46,48 @@ $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
         });
     	// Add row on add button click
-    	$(document).on("click", ".add", function(){
-    		var empty = false;
-    		var input = $(this).parents("tr").find('input[type="text"]');
-            input.each(function(){
-    			if(!$(this).val()){
-    				$(this).addClass("error");
-    				empty = true;
-    			} else{
-                    $(this).removeClass("error");
-                }
-    		});
-    		$(this).parents("tr").find(".error").first().focus();
-    		if(!empty){
-
-    		  const id = $(this).parents("tr").find('input[id="username"]').val()
-             $.ajax({
-                            type: "POST",
-                            url: "http://localhost:8090/api/User/managers/" + id,
-                            dataType: 'json',
-                            contentType: 'application/json',
-                            data: JSON.stringify({
-                                username: $(this).parents("tr").find('input[id="username"]').val(),
-                                active: true,
-                                role: 'MANAGER',
-                                firstName: $(this).parents("tr").find('input[id="firstName"]').val(),
-                                lastName: $(this).parents("tr").find('input[id="lastName"]').val(),
-                                email: $(this).parents("tr").find('input[id="email"]').val(),
-                                birthDate: $(this).parents("tr").find('input[id="birthDate"]').val(),
-                                phoneNumber: $(this).parents("tr").find('input[id="phoneNumber"]').val(),
-                                password: $(this).parents("tr").find('input[id="password"]').val()
-                            }),
-                            success: function (data) {
-                            console.log('ovdee')
-                              input.each(function(){
-                              				$(this).parent("td").html($(this).val());
-                              			});
-                              			$(this).parents("tr").find(".add, .edit").toggle();
-                              			$(".add-new").removeAttr("disabled");
-                               },
-                            error: function() {
-                            console.log('eror')
-                            }
-                        })
-
-
-
-    		}
+    $(document).on("click", ".add", function(){
+        var empty = false;
+        var input = $(this).parents("tr").find('input[type="text"]');
+        input.each(function(){
+            if(!$(this).val()){
+                $(this).addClass("error");
+                empty = true;
+            } else{
+                $(this).removeClass("error");
+            }
         });
+        $(this).parents("tr").find(".error").first().focus();
+        if(!empty){
+            const id = $(this).parents("tr").find('input[id="username"]').val()
+             $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8090/api/User/managers/" ,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        username: $(this).parents("tr").find('input[id="username"]').val(),
+                        active: true,
+                        role: 'MANAGER',
+                        firstName: $(this).parents("tr").find('input[id="firstName"]').val(),
+                        lastName: $(this).parents("tr").find('input[id="lastName"]').val(),
+                        email: $(this).parents("tr").find('input[id="email"]').val(),
+                        birthDate: $(this).parents("tr").find('input[id="birthDate"]').val(),
+                        phoneNumber: $(this).parents("tr").find('input[id="phoneNumber"]').val(),
+                        password: $(this).parents("tr").find('input[id="password"]').val()
+                    }),
+                   success: function (data) {
+                       input.each(function(){$(this).parent("td").html($(this).val()) });
+                       $(this).parents("tr").find(".add, .edit").toggle();
+                       $(".add-new").removeAttr("disabled");
+                       $(this).parents("tr").attr("id", id);
+                    },
+                    error: function() {
+                        console.log('eror')
+                    }
+                    })
+        }
+    });
 	// Delete row on delete button click
 	$(document).on("click", ".delete", function(){
 	    const id = $(this).parents("tr").attr("id")
