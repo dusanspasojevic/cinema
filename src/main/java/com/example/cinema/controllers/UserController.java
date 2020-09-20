@@ -23,6 +23,14 @@ public class UserController {
     private UserService userService;
 
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody User request) throws Exception{
+        Map<String, String> res = new HashMap<>();
+        userService.register(request);
+        
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestParam(required = true) String username,
                                        @RequestParam(required = true) String password, HttpSession session) {

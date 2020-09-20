@@ -11,19 +11,20 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <script src="/js/register.js"></script>
     <style>
 
 	.register-form {
 		width: 340px;
     	margin: 50px auto;
 	}
-    .login-form form {
+    .register-form form {
     	margin-bottom: 15px;
         background: #f7f7f7;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
         padding: 30px;
     }
-    .login-form h2 {
+    .register-form h2 {
         margin: 0 0 15px;
     }
     .form-control, .btn {
@@ -50,20 +51,20 @@
     </div>
 </nav>
 <div class="register-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form id="register">
         <h2 class="text-center">Register</h2>
         <div class="form-group col-xs-6 col-sm-6 col-md-6">
-            <input type="text" class="form-control" placeholder="First name" required="required">
+            <input type="text" class="form-control" placeholder="First name" id="firstName" required="required">
         </div>
         <div class="form-group col-xs-6 col-sm-6 col-md-6">
-            <input type="text" class="form-control" placeholder="Last name" required="required">
+            <input type="text" class="form-control" placeholder="Last name"  id="lastName" required="required">
         </div>
         <div class="form-group">
-            <input type="email" name="email"  class="form-control input-sm" placeholder="Email Address">
+            <input type="email" name="email"  class="form-control input-sm"  id="email"placeholder="Email Address">
         </div>
         <div class="form-group">
             <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" />
+                <input type='text' class="form-control"  name="birthDate" id="birthDate"/>
                 <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -75,10 +76,10 @@
     </script>
         </div>
         <div class="form-group">
-            <input type="email" name="phone"  class="form-control input-sm" placeholder="Phone number">
+            <input type="text" name="phone"  class="form-control input-sm" placeholder="Phone number" id="phoneNumber">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required="required">
+            <input type="text" class="form-control" placeholder="Username" required="required" id="username">
         </div>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
