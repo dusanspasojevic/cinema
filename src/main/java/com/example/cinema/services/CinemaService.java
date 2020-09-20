@@ -133,23 +133,28 @@ public class CinemaService {
         return responses;
     }
 
-    public List<Cinema> getAllCinemasByManager(String id){
+    public List<CinemaDTO> getAllCinemasByManager(String id){
         List<Cinema> allCinemas = cinemaRepository.findAll();
-        List<Cinema> activeCinemas = new ArrayList<>();
+        List<Cinema> searchedCinemas = new ArrayList<>();
         User manager = userRepository.findOneByUsername(id);
         for(Cinema c: allCinemas){
             if(c.getManagers().contains(manager)){
-                activeCinemas.add(c);
+                searchedCinemas.add(c);
             }
         }
-        List<Cinema> responses = new ArrayList<>();
-        for(Cinema c: activeCinemas){
-            Cinema response = new Cinema();
+        List<CinemaDTO> responses = new ArrayList<>();
+        for(Cinema c: searchedCinemas){
+            CinemaDTO response = new CinemaDTO();
             response.setPhone(c.getPhone());
             response.setName(c.getName());
             response.setId(c.getId());
             response.setEmail(c.getEmail());
             response.setAddress(c.getAddress());
+            List<String> managersNames = new ArrayList<>();
+            for (User u: c.getManagers()){
+                managersNames.add(u.getUsername());
+            }
+            response.setManagersID(String.join(",", managersNames));
             responses.add(response);
         }
         return responses;

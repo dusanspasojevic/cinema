@@ -41,7 +41,7 @@ public class CinemaController {
     }
 
     @GetMapping("/{id}/manager")
-    public List<Cinema> getAllCinemasByManager(@PathVariable String id){
+    public List<CinemaDTO> getAllCinemasByManager(@PathVariable String id){
         return cinemaService.getAllCinemasByManager(id);
     }
 }
