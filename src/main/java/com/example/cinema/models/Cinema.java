@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "cinemas")
+@Entity
+@Table(name = "cinema")
 public class Cinema {
 
     @Id
@@ -23,25 +24,25 @@ public class Cinema {
     private String phone;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<MovieHall> theaters = new ArrayList<>();
+    private List<MovieHall> halls = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "cinema_manager",
             joinColumns = @JoinColumn(name = "cinema_id"),
-            inverseJoinColumns = @JoinColumn(name = "manager_id")
+            inverseJoinColumns = @JoinColumn(name = "user_username")
     )
     List<User> managers = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Projection> projections = new ArrayList<>();
 
-    public Cinema(long id, String name, String address, String email, String phone, List<MovieHall> theaters, List<User> managers, List<Projection> projections) {
+    public Cinema(long id, String name, String address, String email, String phone, List<MovieHall> halls, List<User> managers, List<Projection> projections) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
         this.phone = phone;
-        this.theaters = theaters;
+        this.halls = halls;
         this.managers = managers;
         this.projections = projections;
     }
@@ -89,12 +90,12 @@ public class Cinema {
         this.phone = phone;
     }
 
-    public List<MovieHall> getTheaters() {
-        return theaters;
+    public List<MovieHall> getHalls() {
+        return halls;
     }
 
-    public void setTheaters(List<MovieHall> theaters) {
-        this.theaters = theaters;
+    public void setHalls(List<MovieHall> halls) {
+        this.halls = halls;
     }
 
     public List<User> getManagers() {

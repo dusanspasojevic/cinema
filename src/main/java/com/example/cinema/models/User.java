@@ -46,6 +46,14 @@ public class User {
     @Column
     private Boolean active;
 
+    public List<Cinema> getCinemas() {
+        return cinemas;
+    }
+
+    public void setCinemas(List<Cinema> cinemas) {
+        this.cinemas = cinemas;
+    }
+
     @ManyToMany()
     private List<Cinema> cinemas = new ArrayList<>();
 

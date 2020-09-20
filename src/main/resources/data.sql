@@ -4,3 +4,14 @@ insert into users(mydtype, email,username, password, first_name, last_name, phon
 ('users', 'm1@yahoo.com', 'm1' ,'123', 'Manager1', 'Manager1', '063-765-432', '1996-03-03', 'MANAGER', 'true'),
 ('users', 'm2@yahoo.com', 'm2' ,'123', 'Manager2', 'Manager2', '064-643-785', '1995-04-04', 'MANAGER', 'true'),
 ('users', 'viewer1@yahoo.com', 'sp1' ,'123', 'Viewer1', 'Viewer1', '065-742-923', '1994-05-05', 'SPECTATOR', 'true');
+
+insert into cinema(id, name, address, email, phone) values
+(1, 'Cinema1', 'Address1', 'c1@yahoo.com', '064-346-443'),
+(2, 'Cinema2', 'Address2', 'c2@yahoo.com', '063-765-743'),
+(3, 'Cinema3', 'Address3', 'c3@yahoo.com', '062-600-743');
+
+insert into cinema_manager(cinema_id, user_username) values
+(1, 'm1'),
+(2, 'm1'),
+(3, 'm2'),
+(3, 'm1');
