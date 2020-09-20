@@ -10,7 +10,7 @@ insert into cinema(id, name, address, email, phone) values
 (2, 'Cinema2', 'Address2', 'c2@yahoo.com', '063-765-743'),
 (3, 'Cinema3', 'Address3', 'c3@yahoo.com', '062-600-743');
 
-insert into cinema_manager(cinema_id, user_username) values
+insert into cinema_user(cinema_id, user_username) values
 (1, 'm1'),
 (2, 'm1'),
 (3, 'm2'),

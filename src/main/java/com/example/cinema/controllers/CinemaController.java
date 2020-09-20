@@ -2,6 +2,8 @@ package com.example.cinema.controllers;
 
 import com.example.cinema.services.CinemaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.cinema.dto.CinemaDTO;
@@ -21,9 +23,10 @@ public class CinemaController {
         return cinemaService.createCinema(request);
     }
 
-    @PutMapping
-    public void editCinema(@RequestBody Cinema request) throws Exception{
-        cinemaService.editCinema(request);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editCinema(@RequestBody CinemaDTO request) throws Exception{
+
+         return new ResponseEntity<>(cinemaService.editCinema(request), HttpStatus.OK);
     }
 
     @GetMapping

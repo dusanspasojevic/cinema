@@ -27,7 +27,7 @@ public class Cinema {
     private List<MovieHall> halls = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(name = "cinema_manager",
+    @JoinTable(name = "cinema_user",
             joinColumns = @JoinColumn(name = "cinema_id"),
             inverseJoinColumns = @JoinColumn(name = "user_username")
     )

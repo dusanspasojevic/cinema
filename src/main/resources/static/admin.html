@@ -68,6 +68,9 @@
 	table.table td a.add {
         color: #27C46B;
     }
+    table.table td a.save {
+        color: #FF0000;
+    }
     table.table td a.edit {
         color: #FFC107;
     }
@@ -77,12 +80,18 @@
     table.table td i {
         font-size: 19px;
     }
-	table.table td a.add i {
+	table.table td a.add i  {
         font-size: 24px;
     	margin-right: -1px;
         position: relative;
         top: 3px;
     }
+    table.table td a.save i  {
+    font-size: 24px;
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}
     table.table .form-control {
         height: 32px;
         line-height: 32px;
@@ -92,9 +101,13 @@
 	table.table .form-control.error {
 		border-color: #f50000;
 	}
+	table.table td .save {
+		display: none;
+	}
 	table.table td .add {
 		display: none;
 	}
+
 </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

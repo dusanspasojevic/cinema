@@ -71,21 +71,37 @@ public class CinemaService {
         return response;
     }
 
-    public void editCinema(Cinema request) throws Exception{
-        List<Cinema> cinemas = cinemaRepository.findAll();
-        for(Cinema c: cinemas){
-         if(c.getId() != request.getId()){
-                if(c.getName().equals(request.getName())){
-                    throw new Exception("Choosen name already exists!");
-                }
-            }
-        }
+    public CinemaDTO editCinema(CinemaDTO request) throws Exception{
         Cinema cinema = cinemaRepository.findOneById(request.getId());
         cinema.setPhone(request.getPhone());
         cinema.setAddress(request.getAddress());
         cinema.setName(request.getName());
         cinema.setEmail(request.getEmail());
+        User manager;
+        List<User> managersToSave = new ArrayList<>();
+        for (String id: request.getManagersID().split(",")) {
+            manager = userRepository.findOneByUsername(id);
+            if (!cinema.getManagers().contains(manager)) {
+                cinema.getManagers().add(manager);
+                manager.getCinemas().add(cinema);
+                managersToSave.add(manager);
+            }
+        }
+
         cinemaRepository.save(cinema);
+
+        for (User m : managersToSave)
+            userRepository.save(m);
+
+        CinemaDTO response = new CinemaDTO();
+        response.setPhone(cinema.getPhone());
+        response.setName(cinema.getName());
+        response.setId(cinema.getId());
+        response.setEmail(cinema.getEmail());
+        response.setAddress(cinema.getAddress());
+
+
+        return response;
     }
 
     public void deleteCinema(Long id) {
