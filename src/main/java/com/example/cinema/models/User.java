@@ -1,17 +1,18 @@
 package com.example.cinema.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@DiscriminatorColumn(name = "myDType")
 @Entity(name = "users")
 public class User {
     @Id
     private String username;
+
+    @Column(insertable = false, updatable = false)
+    private String myDType;
 
     @Column
     private String password;

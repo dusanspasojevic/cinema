@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/User")
@@ -36,6 +37,10 @@ public class UserController {
                 res.put("status", "ok");
                 session.setAttribute("username", username);
                 session.setAttribute("role", user.getRole());
+
+                res.put("username", (String) session.getAttribute("username"));
+                res.put("role", (String) session.getAttribute("role"));
+
             } else {
                 return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
             }
@@ -56,5 +61,25 @@ public class UserController {
 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+    @GetMapping("/managers")
+    public ResponseEntity<?> getAllManagers(HttpSession session) {
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("ADMIN"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        return new ResponseEntity<>(this.userService.getAllManagers(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteManager(@PathVariable String id, HttpSession session){
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("ADMIN"))
+            return;
+
+        this.userService.deleteUser(id);
+    }
+
 
 }

@@ -22,8 +22,19 @@ $(document).ready(function() {
                 password: $("#password").val()
             },
             success: function (data) {
-                alert("Welcome " + $("#username").val() + "!");
-                window.location.replace("http://localhost:8090/");
+                sessionStorage.setItem("username", data["username"]);
+                sessionStorage.setItem("role",data["role"]);
+                switch(data["role"]) {
+                case "ADMIN" :  window.location.replace("http://localhost:8090/admin.html");
+                break;
+                case "MANAGER" :  window.location.replace("http://localhost:8090/manager.html");
+                break;
+                case "SPECTATOR" :  window.location.replace("http://localhost:8090/spectator.html");
+                break;
+                default:  console.log(data["role"])
+                }
+
+
             },
             error: function() {
                 $("#message").text("Invalid credentials.");

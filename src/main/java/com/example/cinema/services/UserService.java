@@ -23,4 +23,12 @@ public class UserService {
 
         return user;
     }
+
+    public List<User> getAllManagers() {
+        return this.userRepository.findByRole("MANAGER");
+    }
+
+    public void deleteUser(String id){
+        userRepository.deleteById(id);
+    }
 }
