@@ -1,6 +1,7 @@
 $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
      $("#halltable").children().hide();
+     $("#addBtn").hide();
 
      var actions =  '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' +
      	                '<a class="save" title="Save" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' +
@@ -32,16 +33,19 @@ $(document).ready(function(){
                 }
             })
 
-
+    var cinemaName;
+   var cinemaId;
 //Show all halls on click
 $(document).on("click", ".hall", function(){
     const id =  $(this).parents("tr").attr("id")
+
      $.ajax({
         type: "GET",
         url: "http://localhost:8090/api/hall/" + id +'/cinema',
        success: function (data) {
            $("#cinematable").children().hide();
            $("#halltable").children().show();
+
 
             data.forEach(hall => {
                                var table = $("#halltable tbody");
@@ -54,9 +58,12 @@ $(document).on("click", ".hall", function(){
                                     '</td>'
                                '</tr>';
                                table.append(row);
+                               cinemaName = hall.cinemaName
+                               cinemaId = hall.cinema;
                                })
 
                                 $(".save").hide();
+                                 $("#addBtn").show();
         },
         error: function() {
             console.log('eror u dobavljanju sala')
@@ -135,5 +142,72 @@ $(document).on("click", ".save", function(){
                         }
                     })
     });
+
+//Add row for inserting new values
+$(".add-new").click(function(){
+        $(this).attr("disabled", "disabled");
+        var index = $("#halltable tbody tr:last-child").index();
+
+        var row = '<tr>' +
+            '<td><input type="text" class="form-control" name="label" id="label"></td>' +
+            '<td><input type="text" class="form-control" name="capacity" id="capacity"></td>' +
+            '<td><input type="text" disabled="true" class="form-control"  id="cinema" name="cinema" value="' +
+                 cinemaId + '"></td>' +
+            '<td><input type="text" disabled="true" class="form-control"  id="cinemaName" name="cinemaName" value="' + cinemaName + '"></td>' +
+            '<td>' + actions + '</td>' +
+        '</tr>';
+        $("#halltable").append(row);
+        $("#halltable tbody tr").eq(index + 1).find(".add, .edit, .delete").toggle();
+        $("#halltable tbody tr").eq(index + 1).find(".save").hide();
+        $('[data-toggle="tooltip"]').tooltip();
+});
+
+
+    	// Add row on add button click
+    $(document).on("click", ".add", function(){
+        var empty = false;
+        var input = $(this).parents("tr").find('input[type="text"]');
+        input.each(function(){
+            if(!$(this).val()){
+                $(this).addClass("error");
+                empty = true;
+            } else{
+                $(this).removeClass("error");
+            }
+        });
+        $(this).parents("tr").find(".error").first().focus();
+        if(!empty){
+        var field =  $(this)
+             $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8090/api/hall/" ,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        label: $(this).parents("tr").find('input[id="label"]').val(),
+                        capacity: $(this).parents("tr").find('input[id="capacity"]').val(),
+                        cinema: $(this).parents("tr").find('input[id="cinema"]').val(),
+                        cinemaName: $(this).parents("tr").find('input[id="cinemaName"]').val(),
+                    }),
+                   success: function (data) {
+                        console.log(data)
+                       const id = data.id;
+                        field.parents('tr').attr("id", id);
+                       input.each(function(){
+                            $(this).parent("td").attr("name", $(this).attr("name"));
+                            console.log($(this).attr("name"))
+                             $(this).parent("td").html($(this).val());
+                       });
+
+                       field.parents("tr").find(".add, .edit, .delete").toggle();
+                       $(".add-new").removeAttr("disabled");
+                    },
+                    error: function() {
+                        console.log('eror')
+                    }
+                    })
+        }
+    });
+
 
 });

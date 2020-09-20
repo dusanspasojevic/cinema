@@ -23,7 +23,7 @@ public class Cinema {
     @Column
     private String phone;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.DETACH)
     private List<MovieHall> halls = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.DETACH)

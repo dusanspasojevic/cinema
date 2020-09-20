@@ -33,19 +33,25 @@ public class HallService {
             }
         }
         MovieHall hall = new MovieHall();
+        long id = 1;
+        if(!halls.isEmpty()){
+            id = halls.size() + 1;
+        }
+        hall.setId(id);
         hall.setLabel(request.getLabel());
         hall.setCapacity(request.getCapacity());
         Cinema cinema = cinemaRepository.findOneById(request.getCinema());
         hall.setCinema(cinema);
         hallRepository.save(hall);
 
-        cinema.getHalls().add(hall);
-        cinemaRepository.save(cinema);
+//        cinema.getHalls().add(hall);
+//        cinemaRepository.save(cinema);
         HallDTO response = new HallDTO();
         response.setLabel(hall.getLabel());
         response.setCapacity(hall.getCapacity());
         response.setCinema(hall.getCinema().getId());
         response.setCinemaName(hall.getCinema().getName());
+        response.setId(hall.getId());
 
         return response;
     }
