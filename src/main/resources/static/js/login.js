@@ -29,12 +29,10 @@ $(document).ready(function() {
                 break;
                 case "MANAGER" :  window.location.replace("http://localhost:8090/manager.html");
                 break;
-                case "SPECTATOR" :  window.location.replace("http://localhost:8090/spectator.html");
+                case "SPECTATOR" :  window.location.replace("http://localhost:8090/movies.html");
                 break;
                 default:  console.log(data["role"])
                 }
-
-
             },
             error: function() {
                 $("#message").text("Invalid credentials.");
