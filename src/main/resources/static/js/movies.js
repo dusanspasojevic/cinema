@@ -8,13 +8,13 @@ $(document).ready(function() {
                                     var table = $("table tbody");
                                     var row = '<tr id=' + projection.id + '>' +
                                         '<td name="movie">' + projection.movieTitle + '</td>' +
-                                         '<td name="duration">' + projection.duration + '</td>' +
+                                         '<td name="duration">' + parseInt(projection.duration) + '</td>' +
                                         '<td name="cinema">' + projection.cinemaName + '</td>' +
                                         '<td name="genre" >' + projection.genre + '</td>' +
                                         '<td name="desc" >' + projection.desc + '</td>' +
                                         '<td name="date" >' + projection.time.slice(0,10) + '</td>' +
-                                        '<td name="price" >' + projection.price + '</td>' +
-                                         '<td name="vote" >' + projection.vote + '</td>' +
+                                        '<td name="price" >' + parseInt(projection.price) + '</td>' +
+                                         '<td name="vote" >' + parseFloat(projection.vote) + '</td>' +
                                     '</tr>';
                                     table.append(row);
                                     })
@@ -109,4 +109,59 @@ $( "#srcBtn" ).click(function() {
 
 });
 
-})
+});
+
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("prjtable");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}

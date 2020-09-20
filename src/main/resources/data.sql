@@ -29,11 +29,11 @@ insert into moviehalls(id, label, capacity, cinema_id) values
 insert into movies(title, description, duration, genre) values
 ('Movie name1', 'Opis1', 60, 'KOMEDIJA'),
 ('Movie 2', 'Opis2', 90, 'KOMEDIJA'),
-('Movie 3', 'Opis3', 120, 'AKCIJA'),
+('Movie 3', 'Opis3', 95, 'AKCIJA'),
 ('Movie 4', 'Opis4', 60, 'HOROR'),
-('Movie 5', 'Opis5', 120, 'TRILER' ),
+('Movie 5', 'Opis5', 65, 'TRILER' ),
 ('Movie 7', 'Opis7', 90, 'AKCIJA'),
-('Movie 8', 'Opis8', 120, 'NAUCNA FANTASTIKA');
+('Movie 8', 'Opis8',80, 'NAUCNA FANTASTIKA');
 
 insert into projections(id, date_time, not_reserved_seats, price, hall_id, movie_id) values
 (1, '2020-08-11T10:00:00', 50, 150, 1, 'Movie name1'),
