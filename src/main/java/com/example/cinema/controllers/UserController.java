@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
 import javax.servlet.http.HttpSession;
 
 import javax.servlet.http.HttpSession;
@@ -69,6 +71,7 @@ public class UserController {
 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
     @GetMapping("/managers")
     public ResponseEntity<?> getAllManagers(HttpSession session) {
         String role = (String) session.getAttribute("role");
@@ -87,6 +90,17 @@ public class UserController {
             return;
 
         this.userService.deleteUser(id);
+    }
+
+    @GetMapping("/logout")
+    public RedirectView logout(HttpSession session) {
+        if (session.getAttribute("username") == null)
+        {
+            return new RedirectView("/index.html");
+        }
+
+        session.invalidate();
+        return new RedirectView("/index.html");
     }
 
 

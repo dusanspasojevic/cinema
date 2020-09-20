@@ -60,13 +60,14 @@ $(document).ready(function(){
         $(this).parents("tr").find(".error").first().focus();
         if(!empty){
             const id = $(this).parents("tr").find('input[id="username"]').val()
+            $(this).closest('tr').attr("id", id);
              $.ajax({
                     type: "POST",
                     url: "http://localhost:8090/api/User/managers/" ,
                     dataType: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify({
-                        username: $(this).parents("tr").find('input[id="username"]').val(),
+                        username: id,
                         active: true,
                         role: 'MANAGER',
                         firstName: $(this).parents("tr").find('input[id="firstName"]').val(),
@@ -77,10 +78,10 @@ $(document).ready(function(){
                         password: $(this).parents("tr").find('input[id="password"]').val()
                     }),
                    success: function (data) {
+
                        input.each(function(){$(this).parent("td").html($(this).val()) });
                        $(this).parents("tr").find(".add, .edit").toggle();
                        $(".add-new").removeAttr("disabled");
-                       $(this).parents("tr").attr("id", id);
                     },
                     error: function() {
                         console.log('eror')

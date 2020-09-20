@@ -33,7 +33,6 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-
     public void createManager(User request) throws Exception{
         List<User> allUsers = userRepository.findAll();
         for(User u: allUsers){
