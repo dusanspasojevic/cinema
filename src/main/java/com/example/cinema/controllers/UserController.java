@@ -27,7 +27,7 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody User request) throws Exception{
         Map<String, String> res = new HashMap<>();
         userService.register(request);
-        
+
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 

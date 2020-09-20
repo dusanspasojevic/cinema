@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.cinema.dto.HallDTO;
 import com.example.cinema.models.MovieHall;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -19,29 +20,58 @@ public class HallController {
     private HallService hallService;
 
     @PostMapping
-    public HallDTO createHall(@RequestBody HallDTO request) throws Exception{
-        return hallService.createHall(request);
+    public ResponseEntity<?> createHall(@RequestBody HallDTO request, HttpSession session) throws Exception{
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("MANAGER"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        return new ResponseEntity<>(hallService.createHall(request),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editHall(@RequestBody HallDTO request) throws Exception{
+    public ResponseEntity<?> editHall(@RequestBody HallDTO request,HttpSession session) throws Exception{
+
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("MANAGER"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
 
         return new ResponseEntity<>(hallService.editHall(request), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<HallDTO> getAllHalls(){
-        return hallService.getAllHalls();
+    public ResponseEntity<?> getAllHalls(HttpSession session){
+
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("MANAGER"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        return new ResponseEntity<>(hallService.getAllHalls(), HttpStatus.OK);
     }
 
 
     @DeleteMapping("/{id}")
-    public void deleteHall(@PathVariable Long id){
+    public ResponseEntity<?> deleteHall(@PathVariable Long id, HttpSession session){
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("MANAGER"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
         hallService.deleteHall(id);
+        
+        return new ResponseEntity<>("", HttpStatus.OK);
+
     }
 
     @GetMapping("/{id}/cinema")
-    public List<HallDTO> getAllHallsByCinema(@PathVariable Long id){
-        return hallService.getAllHallsByCinema(id);
+    public ResponseEntity<?>  getAllHallsByCinema(@PathVariable Long id, HttpSession session){
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("MANAGER"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        return new ResponseEntity<>(hallService.getAllHallsByCinema(id), HttpStatus.OK);
     }
 }
