@@ -109,21 +109,34 @@
     </div>
 </nav>
 <div class="container">
-    <div class="table-wrapper">
+    <div class="table-wrapper" >
         <div class="table-title">
             <div class="row">
-                <div class="col-sm-8"><h2>Cinema <b>Details</b></h2></div>
+                <div class="col-sm-8"><h2><b>Details</b></h2></div>
             </div>
         </div>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="cinematable">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Managers</th>
+            <th>See halls</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+        <table class="table table-bordered" id="halltable">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Email</th>
-                <th>Phone number</th>
-                <th>Managers</th>
-                <th>See halls</th>
+                <th name="label">Name</th>
+                <th name="capacity">Capacity</th>
+                <th name="cinema">Cinema ID</th>
+                <th name="cinemaName">Cinema name</th>
+                <th >Actions</th>
             </tr>
             </thead>
             <tbody>

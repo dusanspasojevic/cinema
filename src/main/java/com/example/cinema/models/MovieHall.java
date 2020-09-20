@@ -8,6 +8,9 @@ import java.util.List;
 public class MovieHall {
 
     @Id
+    private long id;
+
+    @Column
     private String label;
 
     @Column
@@ -44,6 +47,14 @@ public class MovieHall {
 
     public Cinema getCinema() {
         return cinema;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setCinema(Cinema cinema) {

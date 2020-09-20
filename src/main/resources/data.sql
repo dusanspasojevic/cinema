@@ -15,3 +15,10 @@ insert into cinema_user(cinema_id, user_username) values
 (2, 'm1'),
 (3, 'm2'),
 (3, 'm1');
+
+insert into moviehalls(id, label, capacity, cinema_id) values
+(1,'Theater1', 50, 1),
+(2,'VM12', 20, 2),
+(3,'BIG ROOM', 20, 3),
+(4,'Theater2', 40, 1),
+(5,'Theater3', 10, 1);

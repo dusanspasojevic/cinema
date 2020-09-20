@@ -1,8 +1,5 @@
 package com.example.cinema.dto;
 
-
-import java.util.ArrayList;
-
 public class CinemaDTO {
 
     private long id;
