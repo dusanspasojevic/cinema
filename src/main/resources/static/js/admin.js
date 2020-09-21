@@ -102,7 +102,7 @@ if (!user)
                             $(`#${id}`).remove();
                            },
                         error: function() {
-                        console.log('eror')
+                        alert("Cinema managed by this manager has only one manager so manager can't be deleted.")
                         }
                     })
     });

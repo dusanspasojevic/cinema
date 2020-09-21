@@ -1,7 +1,9 @@
 package com.example.cinema.services;
 
 import com.example.cinema.dto.UserDTO;
+import com.example.cinema.models.Cinema;
 import com.example.cinema.models.User;
+import com.example.cinema.repositories.CinemaRepository;
 import com.example.cinema.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CinemaRepository cinemaRepository;
 
     public User getUser(String username, String password) throws Exception {
         User user = this.userRepository.getOne(username);
@@ -32,6 +37,8 @@ public class UserService {
 
         List<UserDTO> responses = new ArrayList<>();
         for (User m: managers) {
+            if(m.isDeleted())
+                continue;
             UserDTO response = new UserDTO();
             response.setBirthDate(m.getBirthDate());
             response.setEmail(m.getEmail());
@@ -47,15 +54,31 @@ public class UserService {
     }
 
 
-
-    public void deleteUser(String id){
-        userRepository.deleteById(id);
+    public boolean deleteUser(String id){
+        User user = userRepository.findOneByUsername(id);
+        if (user == null)
+            return false;
+        if (user.getRole().equalsIgnoreCase("MANAGER")) {
+            List<Cinema> cinemas = user.getCinemas();
+            for (Cinema c : cinemas) {
+                if (c.isDeleted())
+                    continue;
+                if (c.getManagers().size() == 1) {
+                    return false;
+                }
+                c.getManagers().remove(user);
+                cinemaRepository.save(c);
+            }
+        }
+        user.setDeleted(true);
+        userRepository.save(user);
+        return true;
     }
 
     public void createManager(User request) throws Exception{
         List<User> allUsers = userRepository.findAll();
         for(User u: allUsers){
-            if(u.isActive()) {
+            if(u.isActive() && !u.isDeleted()) {
                 if (u.getUsername().equals(request.getUsername())) {
                     throw new Exception("Username already exists!");
                 }
@@ -81,7 +104,7 @@ public class UserService {
     public void register(User request) throws Exception{
         List<User> allUsers = userRepository.findAll();
         for(User u: allUsers){
-            if(u.isActive()) {
+            if(u.isActive() && !u.isDeleted()) {
                 if (u.getUsername().equals(request.getUsername())) {
                     throw new Exception("Username already exists!");
                 }

@@ -11,4 +11,5 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
     Cinema findOneById(Long id);
 
+
 }

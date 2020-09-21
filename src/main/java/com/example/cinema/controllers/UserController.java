@@ -91,13 +91,16 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteManager(@PathVariable String id, HttpSession session){
+    public ResponseEntity<?> deleteManager(@PathVariable String id, HttpSession session){
         String role = (String) session.getAttribute("role");
 
         if (role != null && !role.equals("ADMIN"))
-            return;
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
 
-        this.userService.deleteUser(id);
+        if (this.userService.deleteUser(id))
+            return new ResponseEntity<>("", HttpStatus.OK);
+        else
+            return  new ResponseEntity<>("", HttpStatus.FAILED_DEPENDENCY);
     }
 
     @GetMapping("/logout")

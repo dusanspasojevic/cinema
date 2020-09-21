@@ -1,9 +1,6 @@
 package com.example.cinema.services;
 
-import com.example.cinema.models.Cinema;
-import com.example.cinema.models.MovieHall;
-import com.example.cinema.models.Projection;
-import com.example.cinema.models.User;
+import com.example.cinema.models.*;
 import com.example.cinema.repositories.CinemaRepository;
 import com.example.cinema.repositories.HallRepository;
 import com.example.cinema.repositories.ProjectionRepository;
@@ -116,13 +113,16 @@ public class CinemaService {
 
     public void deleteCinema(Long id) {
         Cinema c = cinemaRepository.getOne(id);
+
         for (User m: c.getManagers()){
             m.getCinemas().remove(c);
             userRepository.save(m);
         }
-        for (MovieHall m : c.getHalls()) {
+        List<MovieHall> halls = hallRepository.findByCinema(id);
+        for (MovieHall m : halls) {
             m.setDeleted(true);
-            for (Projection p: m.getProjections()) {
+            List<Projection> projections = projectionRepository.findByHall(m.getId());
+            for (Projection p: projections) {
                 p.setDeleted(true);
                 projectionRepository.save(p);
             }
@@ -159,6 +159,8 @@ public class CinemaService {
         List<Cinema> searchedCinemas = new ArrayList<>();
         User manager = userRepository.findOneByUsername(id);
         for(Cinema c: allCinemas){
+            if (c.isDeleted())
+                continue;
             if(c.getManagers().contains(manager)){
                 searchedCinemas.add(c);
             }
