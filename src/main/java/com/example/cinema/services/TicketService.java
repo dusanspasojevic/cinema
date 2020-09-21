@@ -39,7 +39,7 @@ public class TicketService {
         Date now = new Date();
         System.out.println(now);
 
-        for (Ticket t: reservedByUser) {
+        for (Ticket t : reservedByUser) {
             if (t.isDeleted())
                 continue;
             if (t.getProjection().getDateTime().after(now))
@@ -63,6 +63,32 @@ public class TicketService {
             responses.add(response);
         }
 
+        return responses;
+    }
+
+    public List<TicketDTO> getReservedTickets(String username) throws Exception {
+        User user = this.userRepository.getOne(username);
+        if (user == null)
+            throw new Exception("Username is not valid!");
+        List<Ticket> reservedByUser = ticketRepository.findByStatusAndUser("RESERVED", username);
+        List<TicketDTO> responses = new ArrayList<>();
+
+        for (Ticket t : reservedByUser) {
+            if (t.isDeleted())
+                continue;
+            TicketDTO response = new TicketDTO();
+            response.setId(t.getId());
+            response.setSpectatorId(t.getSpectator().getUsername());
+            response.setDate(t.getProjection().getDateTime());
+            Movie movie = t.getProjection().getMovie();
+            response.setMovieTitle(movie.getTitle());
+            response.setMovieDuration(movie.getDuration());
+            response.setMovieId(movie.getTitle());
+            response.setCinemaName(t.getProjection().getHall().getCinema().getName());
+            response.setPrice(t.getProjection().getPrice());
+            response.setHallName(t.getProjection().getHall().getLabel());
+            responses.add(response);
+        }
         return responses;
     }
 

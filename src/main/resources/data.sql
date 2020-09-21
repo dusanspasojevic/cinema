@@ -4,7 +4,7 @@ insert into users(mydtype, email,username, password, first_name, last_name, phon
 ('users', 'm1@yahoo.com', 'm1' ,'123', 'Manager1', 'Manager1', '063-765-432', '1996-03-03', 'MANAGER', 'true', 'false'),
 ('users', 'm2@yahoo.com', 'm2' ,'123', 'Manager2', 'Manager2', '064-643-785', '1995-04-04', 'MANAGER', 'false', 'false'),
 ('users', 'viewer1@yahoo.com', 'sp1' ,'123', 'Viewer1', 'Viewer1', '065-742-923', '1994-05-05', 'SPECTATOR', 'true', 'false'),
-('users', 'viewer222@yahoo.com', 'sp2' ,'123', 'Viewer2', 'Viewer2', '065-742-923', '1994-05-05', 'SPECTATOR', 'true', 'false');
+('users', 'vie222@yahoo.com', 'sp2' ,'123', 'Viewer2', 'Viewer2', '065-742-923', '1994-05-05', 'SPECTATOR', 'true', 'false');
 
 insert into cinema(id, name, address, email, phone, deleted) values
 (1, 'Cinema1', 'Address1', 'c1@yahoo.com', '064-346-443', 'false'),

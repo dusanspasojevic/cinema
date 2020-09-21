@@ -30,4 +30,19 @@ public class TicketController {
         }
 
     }
+
+    @GetMapping("/reserved/{id}")
+    public ResponseEntity<?> getReservedTickets(@PathVariable String id, HttpSession session){
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("SPECTATOR"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        try {
+            return new ResponseEntity<>(ticketService.getReservedTickets(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

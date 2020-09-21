@@ -3,6 +3,7 @@ const user = sessionStorage.getItem("username");
 if (!user)
     window.location.replace("http://localhost:8090/index.html");
 $("#moviestable").children().hide();
+$("#ticketstable").children().hide();
 $(".labelText").hide();
 $(".labelText").children().hide();
     $.ajax({
@@ -120,6 +121,35 @@ $("#moviestable").on("click", "#rate",function(event) {
             }
         })
 })
+
+$("#ticketsLink").click(function() {
+            const user = sessionStorage.getItem("username");
+            $("#ticketstable").children().show();
+            $("#ticketstable tbody tr").remove();
+              $.ajax({
+                 type: "GET",
+                 url: "http://localhost:8090/api/ticket/reserved/" + user,
+                 success: function (data) {
+                  var table = $("#ticketstable tbody");
+                  data.forEach(ticket => {
+                    let vote = ticket.vote == 0 ? '': ticket.vote
+                     var row = '<tr id=' + ticket.movieId + '>' +
+                         '<td name="ticketTitle">' + ticket.movieTitle + '</td>' +
+                         '<td name="ticketDate">' + ticket.date.slice(0,10) + '</td>' +
+                         '<td name="ticketCinema" >' + ticket.cinemaName + '</td>' +
+                         '<td name="ticketPrice" >' + ticket.price + '</td>' +
+                         '<td name="ticketHall" >' + ticket.hallName + '</td>' +
+                     '</tr>';
+                     table.append(row);
+                     })
+                 },
+                 error: function(eror) {
+                    console.log(eror)
+                 }
+               })
+        });
+
+
 });
 
 
