@@ -1,5 +1,6 @@
 package com.example.cinema.controllers;
 
+import com.example.cinema.dto.UserDTO;
 import com.example.cinema.models.User;
 import com.example.cinema.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +94,17 @@ public class UserController {
     public ResponseEntity<?> getInfo(HttpSession session) {
         Map<String, String> res = new HashMap<>();
 
-        res.put("username", (String) session.getAttribute("username"));
-        res.put("role", (String) session.getAttribute("role"));
+       String username = (String) session.getAttribute("username");
 
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        try {
+            UserDTO user = userService.getUserInfo(username);
+
+            return new ResponseEntity<>(user, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/managers")

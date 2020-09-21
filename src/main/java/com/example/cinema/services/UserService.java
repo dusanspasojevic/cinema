@@ -32,6 +32,24 @@ public class UserService {
         return user;
     }
 
+    public UserDTO getUserInfo(String username) throws Exception {
+        User user = this.userRepository.getOne(username);
+        if (user == null)
+            throw new Exception("Username is not valid!");
+
+        UserDTO userResponse = new UserDTO();
+        userResponse.setUsername(user.getUsername());
+        userResponse.setFirstName(user.getFirstName());
+        userResponse.setLastName(user.getLastName());
+        userResponse.setPhoneNumber(user.getPhoneNumber());
+        userResponse.setPassword(user.getPassword());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setBirthDate(user.getBirthDate());
+        userResponse.setActive(user.getActive());
+
+        return userResponse;
+    }
+
     public List<UserDTO> getAllManagers() {
         List<User> managers =  this.userRepository.findByRole("MANAGER");
 

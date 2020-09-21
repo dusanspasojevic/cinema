@@ -36,8 +36,7 @@ if (!user)
     case "MANAGER" :  navbar =         '<li class="active"><a href="manager.html">Cinemas</a></li>' +
                                                        '<li><a class="logout">Logout</a></li>'
     break;
-    case "SPECTATOR" :  navbar = '<li class="active"><a href="#">Watched movies</a></li>' +
-                                         '    <li><a href="me.html">Profile</a></li>' +
+    case "SPECTATOR" :  navbar =  '    <li><a href="profile.html">Profile</a></li>' +
                                              '<li><a class="logout">Logout</a></li>'
     break;
     default:  console.log(role)
