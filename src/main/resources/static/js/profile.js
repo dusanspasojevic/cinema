@@ -3,6 +3,7 @@ const user = sessionStorage.getItem("username");
 if (!user)
     window.location.replace("http://localhost:8090/index.html");
 $("#moviestable").children().hide();
+$(".labelText").children().hide();
     $.ajax({
                 type: "GET",
                 url: "http://localhost:8090/api/User/me/",
@@ -19,9 +20,10 @@ $("#moviestable").children().hide();
                 }
             })
 
-        $("#watchedLink").click(function() {
+$("#watchedLink").click(function() {
             const user = sessionStorage.getItem("username");
             $("#moviestable").children().show();
+            $(".labelText").children().show();
               $.ajax({
                              type: "GET",
                              url: "http://localhost:8090/api/ticket/" + user,
@@ -44,5 +46,36 @@ $("#moviestable").children().hide();
                              }
                          })
         });
+
+$("input:checkbox").on('click', function() {
+  var $box = $(this);
+  if ($box.is(":checked")) {
+    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+    $(group).prop("checked", false);
+    $box.prop("checked", true);
+    const choosen = $box.val();
+
+    if(choosen === "rated") {
+     $('#moviestable tbody tr').each(function(){
+       $(this).show();
+        const value = $(this).find('td[name="vote"]').text()
+        if (value === "")
+            $(this).hide();
+     });
+     } else {
+       $('#moviestable tbody tr').each(function(){
+         $(this).show();
+            const value = $(this).find('td[name="vote"]').text()
+            if (value !== "")
+                $(this).hide();
+         });
+  } }
+  else {
+    $box.prop("checked", false);
+     $('#moviestable tr').each(function(){
+        $(this).show();
+     })
+    }
+});
 });
 
