@@ -2,9 +2,9 @@ $(document).ready(function(){
 const user = sessionStorage.getItem("username");
 if (!user)
     window.location.replace("http://localhost:8090/index.html");
-      $('[data-toggle="tooltip"]').tooltip();
-     $("#halltable").children().hide();
-     $("#addBtn").hide();
+$('[data-toggle="tooltip"]').tooltip();
+$("#halltable").children().hide();
+$("#addBtn").hide();
 
      var actions =  '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' +
      	                '<a class="save" title="Save" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' +
@@ -36,11 +36,13 @@ if (!user)
                 }
             })
 
-    var cinemaName;
-   var cinemaId;
+var cinemaName;
+var cinemaId;
 //Show all halls on click
 $(document).on("click", ".hall", function(){
     const id =  $(this).parents("tr").attr("id")
+    cinemaName = $(this).parents("tr").find('td[name="name"]').text()
+    cinemaId = id;
 
      $.ajax({
         type: "GET",
@@ -61,8 +63,7 @@ $(document).on("click", ".hall", function(){
                                     '</td>'
                                '</tr>';
                                table.append(row);
-                               cinemaName = hall.cinemaName
-                               cinemaId = hall.cinema;
+
                                })
 
                                 $(".save").hide();

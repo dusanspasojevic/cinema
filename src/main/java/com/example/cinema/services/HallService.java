@@ -74,10 +74,10 @@ public class HallService {
         return response;
     }
 
-    public void deleteHall(long id) {
+    public boolean deleteHall(long id) {
         MovieHall hall = hallRepository.findOneById(id);
         if (hall == null)
-            return;
+            return false;
         Cinema c = hall.getCinema();
        c.getHalls().remove(c);
        cinemaRepository.save(c);
@@ -89,6 +89,8 @@ public class HallService {
             p.setDeleted(true);
             projectionRepository.save(p);
         }
+
+        return true;
     }
 
     public List<HallDTO> getAllHalls(){

@@ -59,9 +59,10 @@ public class HallController {
         if (role != null && !role.equals("MANAGER"))
             return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
 
-        hallService.deleteHall(id);
-
-        return new ResponseEntity<>("", HttpStatus.OK);
+        if (hallService.deleteHall(id))
+            return new ResponseEntity<>("", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
 
     }
 
