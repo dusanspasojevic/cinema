@@ -1,4 +1,7 @@
 $(document).ready(function(){
+const user = sessionStorage.getItem("username");
+if (!user)
+    window.location.replace("http://localhost:8090/index.html");
       $('[data-toggle="tooltip"]').tooltip();
      $("#halltable").children().hide();
      $("#addBtn").hide();

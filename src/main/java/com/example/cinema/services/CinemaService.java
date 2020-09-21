@@ -1,8 +1,12 @@
 package com.example.cinema.services;
 
 import com.example.cinema.models.Cinema;
+import com.example.cinema.models.MovieHall;
+import com.example.cinema.models.Projection;
 import com.example.cinema.models.User;
 import com.example.cinema.repositories.CinemaRepository;
+import com.example.cinema.repositories.HallRepository;
+import com.example.cinema.repositories.ProjectionRepository;
 import com.example.cinema.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +25,16 @@ public class CinemaService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private HallRepository hallRepository;
+
+    @Autowired
+    private ProjectionRepository projectionRepository;
+
     public Cinema createCinema(CinemaDTO request) throws Exception{
         List<Cinema> cinemas = cinemaRepository.findAll();
         for(Cinema c: cinemas){
-            if(c.getName().equals(request.getName())) {
+            if(c.getName().equals(request.getName()) && !c.isDeleted() ) {
                 throw new Exception("Choosen name already exists!");
             }
         }
@@ -110,13 +120,24 @@ public class CinemaService {
             m.getCinemas().remove(c);
             userRepository.save(m);
         }
-        cinemaRepository.deleteById(id);
+        for (MovieHall m : c.getHalls()) {
+            m.setDeleted(true);
+            for (Projection p: m.getProjections()) {
+                p.setDeleted(true);
+                projectionRepository.save(p);
+            }
+            hallRepository.save(m);
+        }
+        c.setDeleted(true);
+        cinemaRepository.save(c);
     }
 
     public List<CinemaDTO> getAllCinemas(){
         List<Cinema> allCinemas = cinemaRepository.findAll();
         List<CinemaDTO> responses = new ArrayList<>();
         for(Cinema c: allCinemas){
+            if (c.isDeleted())
+                continue;
             CinemaDTO response = new CinemaDTO();
             response.setPhone(c.getPhone());
             response.setName(c.getName());

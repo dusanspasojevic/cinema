@@ -1,11 +1,13 @@
 package com.example.cinema.services;
 
+import com.example.cinema.dto.UserDTO;
 import com.example.cinema.models.User;
 import com.example.cinema.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,8 +27,23 @@ public class UserService {
         return user;
     }
 
-    public List<User> getAllManagers() {
-        return this.userRepository.findByRole("MANAGER");
+    public List<UserDTO> getAllManagers() {
+        List<User> managers =  this.userRepository.findByRole("MANAGER");
+
+        List<UserDTO> responses = new ArrayList<>();
+        for (User m: managers) {
+            UserDTO response = new UserDTO();
+            response.setBirthDate(m.getBirthDate());
+            response.setEmail(m.getEmail());
+            response.setFirstName(m.getFirstName());
+            response.setLastName(m.getLastName());
+            response.setPassword(m.getPassword());
+            response.setPhoneNumber(m.getPhoneNumber());
+            response.setUsername(m.getUsername());
+            responses.add(response);
+        }
+
+        return responses;
     }
 
 

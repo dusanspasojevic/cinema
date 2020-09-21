@@ -9,10 +9,10 @@ import java.util.List;
 public class Spectator extends User {
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "spectator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "spectator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vote> votes = new ArrayList<>();
 
     public List<Ticket> getTickets() {
@@ -30,4 +30,5 @@ public class Spectator extends User {
     public void setVotes(List<Vote> votes) {
         this.votes = votes;
     }
+
 }

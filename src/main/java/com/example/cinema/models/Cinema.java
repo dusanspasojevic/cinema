@@ -23,20 +23,29 @@ public class Cinema {
     @Column
     private String phone;
 
+    @Column
+    private boolean deleted = false;
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @OneToMany(cascade = CascadeType.DETACH)
     private List<MovieHall> halls = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "cinema_user",
             joinColumns = @JoinColumn(name = "cinema_id"),
             inverseJoinColumns = @JoinColumn(name = "user_username")
     )
     List<User> managers = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Projection> projections = new ArrayList<>();
 
-    public Cinema(long id, String name, String address, String email, String phone, List<MovieHall> halls, List<User> managers, List<Projection> projections) {
+    public Cinema(long id, String name, String address, String email, String phone, List<MovieHall> halls, List<User> managers) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -44,7 +53,6 @@ public class Cinema {
         this.phone = phone;
         this.halls = halls;
         this.managers = managers;
-        this.projections = projections;
     }
 
     public Cinema() {
@@ -106,11 +114,4 @@ public class Cinema {
         this.managers = managers;
     }
 
-    public List<Projection> getProjections() {
-        return projections;
-    }
-
-    public void setProjections(List<Projection> projections) {
-        this.projections = projections;
-    }
 }

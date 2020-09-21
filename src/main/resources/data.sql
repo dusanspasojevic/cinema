@@ -1,15 +1,15 @@
-insert into users(mydtype, email,username, password, first_name, last_name, phone_number,  birth_date, role, active) values
-('users', 'admin1@yahoo.com', 'ad1' ,'123', 'Admin1', 'Admin1', '061-543-543', '1998-01-01', 'ADMIN', 'true'),
-('users', 'admin2@yahoo.com', 'ad2' ,'123', 'Admin2', 'Admin2', '062-531-546', '1997-02-02', 'ADMIN', 'true'),
-('users', 'm1@yahoo.com', 'm1' ,'123', 'Manager1', 'Manager1', '063-765-432', '1996-03-03', 'MANAGER', 'true'),
-('users', 'm2@yahoo.com', 'm2' ,'123', 'Manager2', 'Manager2', '064-643-785', '1995-04-04', 'MANAGER', 'true'),
-('users', 'viewer1@yahoo.com', 'sp1' ,'123', 'Viewer1', 'Viewer1', '065-742-923', '1994-05-05', 'SPECTATOR', 'true'),
-('users', 'viewer222@yahoo.com', 'sp2' ,'123', 'Viewer2', 'Viewer2', '065-742-923', '1994-05-05', 'SPECTATOR', 'true');
+insert into users(mydtype, email,username, password, first_name, last_name, phone_number,  birth_date, role, active, deleted) values
+('users', 'admin1@yahoo.com', 'ad1' ,'123', 'Admin1', 'Admin1', '061-543-543', '1998-01-01', 'ADMIN', 'true' , 'false'),
+('users', 'admin2@yahoo.com', 'ad2' ,'123', 'Admin2', 'Admin2', '062-531-546', '1997-02-02', 'ADMIN', 'true', 'false'),
+('users', 'm1@yahoo.com', 'm1' ,'123', 'Manager1', 'Manager1', '063-765-432', '1996-03-03', 'MANAGER', 'true', 'false'),
+('users', 'm2@yahoo.com', 'm2' ,'123', 'Manager2', 'Manager2', '064-643-785', '1995-04-04', 'MANAGER', 'true', 'false'),
+('users', 'viewer1@yahoo.com', 'sp1' ,'123', 'Viewer1', 'Viewer1', '065-742-923', '1994-05-05', 'SPECTATOR', 'true', 'false'),
+('users', 'viewer222@yahoo.com', 'sp2' ,'123', 'Viewer2', 'Viewer2', '065-742-923', '1994-05-05', 'SPECTATOR', 'true', 'false');
 
-insert into cinema(id, name, address, email, phone) values
-(1, 'Cinema1', 'Address1', 'c1@yahoo.com', '064-346-443'),
-(2, 'Cinema2', 'Address2', 'c2@yahoo.com', '063-765-743'),
-(3, 'Cinema3', 'Address3', 'c3@yahoo.com', '062-600-743');
+insert into cinema(id, name, address, email, phone, deleted) values
+(1, 'Cinema1', 'Address1', 'c1@yahoo.com', '064-346-443', 'false'),
+(2, 'Cinema2', 'Address2', 'c2@yahoo.com', '063-765-743', 'false'),
+(3, 'Cinema3', 'Address3', 'c3@yahoo.com', '062-600-743', 'false');
 
 insert into cinema_user(cinema_id, user_username) values
 (1, 'm1'),
@@ -17,13 +17,13 @@ insert into cinema_user(cinema_id, user_username) values
 (3, 'm2'),
 (3, 'm1');
 
-insert into moviehalls(id, label, capacity, cinema_id) values
-(1,'Theater1', 50, 1),
-(2,'VM12', 20, 2),
-(3,'BIG ROOM', 20, 3),
-(4,'Theater2', 40, 1),
-(5,'Theater3', 10, 1),
-(6,'Theater5', 50, 2);
+insert into moviehalls(id, label, capacity, cinema_id, deleted) values
+(1,'Theater1', 50, 1, 'false'),
+(2,'VM12', 20, 2, 'false'),
+(3,'BIG ROOM', 20, 3, 'false'),
+(4,'Theater2', 40, 1, 'false'),
+(5,'Theater3', 10, 1, 'false'),
+(6,'Theater5', 50, 2, 'false');
 
 
 insert into movies(title, description, duration, genre) values
@@ -35,24 +35,24 @@ insert into movies(title, description, duration, genre) values
 ('Movie 7', 'Opis7', 90, 'AKCIJA'),
 ('Movie 8', 'Opis8',80, 'NAUCNA FANTASTIKA');
 
-insert into projections(id, date_time, not_reserved_seats, price, hall_id, movie_id) values
-(1, '2020-08-11T10:00:00', 50, 150, 1, 'Movie name1'),
-(2, '2020-08-11T11:30:00', 50, 200, 1, 'Movie name1'),
-(3, '2020-09-11T13:00:00', 50, 250, 1, 'Movie 2'),
-(4, '2020-09-11T15:00:00', 50, 250, 1, 'Movie 2'),
-(5, '2020-09-11T17:00:00', 50, 300, 1, 'Movie 2'),
-(6, '2020-09-11T19:00:00', 50, 350, 1, 'Movie 3'),
-(7, '2020-09-11T21:30:00', 50, 400, 1, 'Movie 3'),
+insert into projections(id, date_time, not_reserved_seats, price, hall_id, movie_id, deleted) values
+(1, '2020-10-11T10:00:00', 50, 150, 1, 'Movie name1', 'false'),
+(2, '2020-10-11T11:30:00', 50, 200, 1, 'Movie name1', 'false'),
+(3, '2020-10-11T13:00:00', 50, 250, 1, 'Movie 2', 'false'),
+(4, '2020-11-11T15:00:00', 50, 250, 1, 'Movie 2', 'false'),
+(5, '2020-11-11T17:00:00', 50, 300, 1, 'Movie 2', 'false'),
+(6, '2020-11-11T19:00:00', 50, 350, 1, 'Movie 3', 'false'),
+(7, '2020-11-11T21:30:00', 50, 400, 1, 'Movie 3', 'false'),
 
-(8, '2020-09-11T13:30:00', 40, 200, 4, 'Movie 4'),
-(9, '2020-09-11T15:00:00', 40, 200, 4, 'Movie 4'),
-(10, '2020-09-11T16:30:00', 40, 250, 4, 'Movie 4'),
-(11, '2020-09-11T18:00:00', 40, 300, 4, 'Movie 7'),
-(12, '2020-09-11T20:00:00', 40, 350, 4, 'Movie 8'),
+(8, '2020-09-11T13:30:00', 40, 200, 4, 'Movie 4', 'false'),
+(9, '2020-09-11T15:00:00', 40, 200, 4, 'Movie 4', 'false'),
+(10, '2020-09-11T16:30:00', 40, 250, 4, 'Movie 4', 'false'),
+(11, '2020-09-11T18:00:00', 40, 300, 4, 'Movie 7', 'false'),
+(12, '2020-09-11T20:00:00', 40, 350, 4, 'Movie 8', 'false'),
 
-(13, '2020-09-11T16:30:00', 10, 250, 5, 'Movie 5'),
-(14, '2020-09-11T19:00:00', 10, 300, 5, 'Movie 5'),
-(15, '2020-09-11T21:30:00', 10, 300, 5, 'Movie 4');
+(13, '2020-09-11T16:30:00', 10, 250, 5, 'Movie 5', 'false'),
+(14, '2020-09-11T19:00:00', 10, 300, 5, 'Movie 5', 'false'),
+(15, '2020-09-11T21:30:00', 10, 300, 5, 'Movie 4', 'false');
 
 
 insert into votes(id, vote, movie_id, spectator_id) values

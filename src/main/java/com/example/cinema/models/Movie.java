@@ -70,6 +70,14 @@ public class Movie {
         return votes;
     }
 
+    public List<Projection> getProjections() {
+        return projections;
+    }
+
+    public void setProjections(List<Projection> projections) {
+        this.projections = projections;
+    }
+
     public void setVotes(List<Vote> votes) {
         this.votes = votes;
     }

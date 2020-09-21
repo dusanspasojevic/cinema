@@ -11,6 +11,7 @@ public class Vote {
 
     private int vote;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spectator_id")
     private Spectator spectator;

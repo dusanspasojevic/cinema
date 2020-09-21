@@ -1,4 +1,7 @@
 $(document).ready(function() {
+if (user)
+    window.location.replace("http://localhost:8090/movies.html");
+    
     $("#register").submit(function(e) {
         e.preventDefault();
 

@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+const user = sessionStorage.getItem("username");
+if (user)
+    window.location.replace("http://localhost:8090/movies.html");
+
     $("#login").submit(function(e) {
         e.preventDefault();
 

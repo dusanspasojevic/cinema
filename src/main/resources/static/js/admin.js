@@ -1,4 +1,7 @@
 $(document).ready(function(){
+const user = sessionStorage.getItem("username");
+if (!user)
+    window.location.replace("http://localhost:8090/index.html");
     $('[data-toggle="tooltip"]').tooltip();
 	var actions =  '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a><a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>'
     $.ajax({

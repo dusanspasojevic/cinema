@@ -1,4 +1,7 @@
 $(document).ready(function() {
+const user = sessionStorage.getItem("username");
+if (!user)
+    window.location.replace("http://localhost:8090/index.html");
         $.ajax({
             type: "GET",
             url: "http://localhost:8090/api/projection/",
@@ -28,14 +31,14 @@ $(document).ready(function() {
     switch(role) {
     case "ADMIN" :  navbar =        '<li class="active"><a href="admin.html">Employees</a></li>' +
                                      '    <li><a href="cinema.html">Cinemas</a></li>' +
-                                         '<li><a href="api/User/logout">Logout</a></li>'
+                                         '<li><a class="logout" >Logout</a></li>'
     break;
     case "MANAGER" :  navbar =         '<li class="active"><a href="manager.html">Cinemas</a></li>' +
-                                                       '<li><a href="api/User/logout">Logout</a></li>'
+                                                       '<li><a class="logout">Logout</a></li>'
     break;
     case "SPECTATOR" :  navbar = '<li class="active"><a href="#">Watched movies</a></li>' +
                                          '    <li><a href="me.html">Profile</a></li>' +
-                                             '<li><a href="api/User/logout">Logout</a></li>'
+                                             '<li><a class="logout">Logout</a></li>'
     break;
     default:  console.log(role)
     }

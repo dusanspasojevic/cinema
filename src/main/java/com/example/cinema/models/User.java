@@ -54,8 +54,19 @@ public class User {
         this.cinemas = cinemas;
     }
 
-    @ManyToMany()
+    @ManyToMany(mappedBy = "managers", fetch = FetchType.LAZY)
     private List<Cinema> cinemas = new ArrayList<>();
+
+    @Column
+    private boolean deleted = false;
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public User() {
     }

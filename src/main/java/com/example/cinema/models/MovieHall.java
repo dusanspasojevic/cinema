@@ -20,6 +20,29 @@ public class MovieHall {
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 
+
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Projection> projections = new ArrayList<>();
+
+    @Column
+    private boolean deleted = false;
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<Projection> getProjections() {
+        return projections;
+    }
+
+    public void setProjections(List<Projection> projections) {
+        this.projections = projections;
+    }
+
     public MovieHall() {
     }
 
