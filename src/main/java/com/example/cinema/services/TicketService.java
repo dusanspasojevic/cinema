@@ -92,4 +92,24 @@ public class TicketService {
         return responses;
     }
 
+    public boolean cancelReservation(long id) {
+        Ticket t = ticketRepository.findOneById(id);
+        if (t == null)
+            return false;
+        t.setDeleted(true);
+        ticketRepository.save(t);
+
+        return true;
+    }
+
+    public boolean buyTicket(long id) {
+        Ticket t = ticketRepository.findOneById(id);
+        if (t == null)
+            return false;
+        t.setStatus("BOUGHT");
+        ticketRepository.save(t);
+
+        return true;
+    }
+
 }

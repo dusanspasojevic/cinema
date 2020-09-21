@@ -2,6 +2,9 @@ $(document).ready(function(){
 const user = sessionStorage.getItem("username");
 if (!user)
     window.location.replace("http://localhost:8090/index.html");
+
+var actions = '<a class="buy" title="Buy" data-toggle="tooltip"><i class="material-icons" style="color:green">&#xe8c9;</i></a>' +
+                '<a class="cancel" title="Cancel" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>'
 $("#moviestable").children().hide();
 $("#ticketstable").children().hide();
 $(".labelText").hide();
@@ -25,6 +28,7 @@ $(".labelText").children().hide();
 $("#watchedLink").click(function() {
             const user = sessionStorage.getItem("username");
             $("#moviestable").children().show();
+            $("#ticketstable").children().hide();
             $(".labelText").show();
             $(".labelText").children().show();
             $("#moviestable tbody tr").remove();
@@ -126,6 +130,7 @@ $("#ticketsLink").click(function() {
             const user = sessionStorage.getItem("username");
             $("#ticketstable").children().show();
             $("#ticketstable tbody tr").remove();
+            $("#moviestable").children().hide();
               $.ajax({
                  type: "GET",
                  url: "http://localhost:8090/api/ticket/reserved/" + user,
@@ -133,12 +138,13 @@ $("#ticketsLink").click(function() {
                   var table = $("#ticketstable tbody");
                   data.forEach(ticket => {
                     let vote = ticket.vote == 0 ? '': ticket.vote
-                     var row = '<tr id=' + ticket.movieId + '>' +
+                     var row = '<tr id=' + ticket.id + '>' +
                          '<td name="ticketTitle">' + ticket.movieTitle + '</td>' +
                          '<td name="ticketDate">' + ticket.date.slice(0,10) + '</td>' +
                          '<td name="ticketCinema" >' + ticket.cinemaName + '</td>' +
                          '<td name="ticketPrice" >' + ticket.price + '</td>' +
                          '<td name="ticketHall" >' + ticket.hallName + '</td>' +
+                         '<td>' + actions + '</td>' +
                      '</tr>';
                      table.append(row);
                      })
@@ -149,6 +155,36 @@ $("#ticketsLink").click(function() {
                })
         });
 
+
+$(document).on("click", ".cancel", function(){
+const id = $(this).parents("tr").attr("id");
+  $.ajax({
+         type: "DELETE",
+         url: "http://localhost:8090/api/ticket/" + id,
+         success: function (data) {
+          alert('Successfully canceled ticket!')
+           $(`#${id}`).remove();
+         },
+         error: function(eror) {
+            console.log(eror)
+         }
+       })
+})
+
+$(document).on("click", ".buy", function(){
+const id = $(this).parents("tr").attr("id");
+  $.ajax({
+         type: "PUT",
+         url: "http://localhost:8090/api/ticket/" + id,
+         success: function (data) {
+          alert('Successfully bought reservation!')
+           $(`#${id}`).remove();
+         },
+         error: function(eror) {
+            console.log(eror)
+         }
+       })
+})
 
 });
 

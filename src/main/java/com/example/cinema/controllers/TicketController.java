@@ -45,4 +45,30 @@ public class TicketController {
         }
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> cancelReservation(@PathVariable long id, HttpSession session){
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("SPECTATOR"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        if (ticketService.cancelReservation(id))
+            return new ResponseEntity<>("", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> buyTicket(@PathVariable long id, HttpSession session){
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("SPECTATOR"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        if (ticketService.buyTicket(id))
+            return new ResponseEntity<>("", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    }
 }
