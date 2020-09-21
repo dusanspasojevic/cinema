@@ -46,7 +46,7 @@ public class TicketService {
                 continue;
             TicketDTO response = new TicketDTO();
             response.setId(t.getId());
-            response.setSpectatorId(t.getId());
+            response.setSpectatorId(t.getSpectator().getUsername());
             response.setDate(t.getProjection().getDateTime());
             Movie movie = t.getProjection().getMovie();
             response.setMovieTitle(movie.getTitle());

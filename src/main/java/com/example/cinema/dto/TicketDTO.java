@@ -8,7 +8,7 @@ public class TicketDTO {
 
     private long projectionId;
 
-    private long spectatorId;
+    private String spectatorId;
 
     private String movieTitle;
 
@@ -56,11 +56,11 @@ public class TicketDTO {
         this.projectionId = projectionId;
     }
 
-    public long getSpectatorId() {
+    public String getSpectatorId() {
         return spectatorId;
     }
 
-    public void setSpectatorId(long spectatorId) {
+    public void setSpectatorId(String spectatorId) {
         this.spectatorId = spectatorId;
     }
 
