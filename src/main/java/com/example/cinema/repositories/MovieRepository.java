@@ -1,13 +1,11 @@
 package com.example.cinema.repositories;
 
-import com.example.cinema.models.Cinema;
+import com.example.cinema.models.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface CinemaRepository extends JpaRepository<Cinema, Long> {
+public interface MovieRepository extends JpaRepository<Movie, String> {
 
-    Cinema findOneById(Long id);
-
+    Movie findOneByTitle(String title);
 }

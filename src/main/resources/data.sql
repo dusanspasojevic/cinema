@@ -36,7 +36,7 @@ insert into movies(title, description, duration, genre) values
 ('Movie 8', 'Opis8',80, 'NAUCNA FANTASTIKA');
 
 insert into projections(id, date_time, not_reserved_seats, price, hall_id, movie_id, deleted) values
-(1, '2020-10-11T10:00:00', 50, 150, 1, 'Movie name1', 'false'),
+(1, '2020-06-11T10:00:00', 50, 150, 1, 'Movie name1', 'false'),
 (2, '2020-10-11T11:30:00', 50, 200, 1, 'Movie name1', 'false'),
 (3, '2020-10-11T13:00:00', 50, 250, 1, 'Movie 2', 'false'),
 (4, '2020-11-11T15:00:00', 50, 250, 1, 'Movie 2', 'false'),
@@ -50,9 +50,9 @@ insert into projections(id, date_time, not_reserved_seats, price, hall_id, movie
 (11, '2020-09-11T18:00:00', 40, 300, 4, 'Movie 7', 'false'),
 (12, '2020-09-11T20:00:00', 40, 350, 4, 'Movie 8', 'false'),
 
-(13, '2020-09-11T16:30:00', 10, 250, 5, 'Movie 5', 'false'),
-(14, '2020-09-11T19:00:00', 10, 300, 5, 'Movie 5', 'false'),
-(15, '2020-09-11T21:30:00', 10, 300, 5, 'Movie 4', 'false');
+(13, '2020-07-11T16:30:00', 10, 250, 5, 'Movie 5', 'false'),
+(14, '2020-07-11T19:00:00', 10, 300, 5, 'Movie 5', 'false'),
+(15, '2020-06-11T21:30:00', 10, 300, 5, 'Movie 4', 'false');
 
 
 insert into votes(id, vote, movie_id, spectator_id) values
@@ -60,3 +60,13 @@ insert into votes(id, vote, movie_id, spectator_id) values
 (2, 4, 'Movie name1', 'sp1'),
 (3, 3, 'Movie name1', 'sp2'),
 (4, 5, 'Movie 3', 'sp2');
+
+insert into tickets(id, deleted, status, projection_id, spectator_id) values
+(1, 'false', 'RESERVED', 2, 'sp1'),
+(2, 'false', 'BOUGHT',1, 'sp1'),
+(3, 'false','RESERVED', 2,  'sp2'),
+(4, 'false','RESERVED', 6, 'sp2'),
+(5, 'false', 'BOUGHT',13, 'sp1'),
+(6, 'false', 'BOUGHT',15,  'sp1'),
+(7, 'false', 'BOUGHT',13, 'sp2'),
+(8, 'false', 'BOUGHT',15, 'sp2');

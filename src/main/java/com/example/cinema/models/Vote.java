@@ -14,7 +14,7 @@ public class Vote {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spectator_id")
-    private Spectator spectator;
+    private User spectator;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
@@ -37,11 +37,11 @@ public class Vote {
         this.vote = vote;
     }
 
-    public Spectator getSpectator() {
+    public User getSpectator() {
         return spectator;
     }
 
-    public void setSpectator(Spectator spectator) {
+    public void setSpectator(User spectator) {
         this.spectator = spectator;
     }
 
@@ -55,7 +55,7 @@ public class Vote {
 
     public Vote(){};
 
-    public Vote(String id, int vote, Spectator spectator, Movie movie) {
+    public Vote(String id, int vote, User spectator, Movie movie) {
         this.id = id;
         this.vote = vote;
         this.spectator = spectator;

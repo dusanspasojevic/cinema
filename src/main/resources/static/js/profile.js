@@ -18,4 +18,19 @@ if (!user)
                 error: function() {
                 }
             })
+
+        $("#watchedLink").click(function() {
+            const user = sessionStorage.getItem("username");
+              $.ajax({
+                             type: "GET",
+                             url: "http://localhost:8090/api/ticket/" + user,
+                             success: function (data) {
+                             console.log(data)
+                             },
+                             error: function(eror) {
+                                console.log(eror)
+                             }
+                         })
+        });
 });
+
