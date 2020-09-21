@@ -48,4 +48,8 @@ public class MovieService {
         return true;
     }
 
+    public List<Movie> getAll() {
+        return movieRepository.findAll();
+    }
+
 }

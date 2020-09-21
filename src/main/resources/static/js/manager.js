@@ -4,6 +4,8 @@ if (!user)
     window.location.replace("http://localhost:8090/index.html");
 $('[data-toggle="tooltip"]').tooltip();
 $("#halltable").children().hide();
+$("#prjtable").children().hide();
+$("#addProj").hide();
 $("#addBtn").hide();
 
      var actions =  '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' +
@@ -25,7 +27,10 @@ $("#addBtn").hide();
                         '<td name="managersID" >' + cinema.managersID + '</td>' +
                          '<td>' +
                          '<a class="hall" ><i class="material-icons dashboard_customize">&#xe99b;</i></a>' +
-                         '</td>'
+                         '</td>'+
+                         '<td>' +
+                                                  '<a class="schedule" ><i class="material-icons dashboard_customize">&#xe99b;</i></a>' +
+                                                  '</td>'
                     '</tr>';
                     table.append(row);
                     })
@@ -68,6 +73,45 @@ $(document).on("click", ".hall", function(){
 
                                 $(".save").hide();
                                  $("#addBtn").show();
+        },
+        error: function() {
+            console.log('eror u dobavljanju sala')
+        }
+            })
+})
+
+
+$(document).on("click", ".schedule", function(){
+    const id =  $(this).parents("tr").attr("id")
+    cinemaName = $(this).parents("tr").find('td[name="name"]').text()
+    cinemaId = id;
+
+     $.ajax({
+        type: "GET",
+        url: "http://localhost:8090/api/projection/cinema/" + id ,
+       success: function (data) {
+           $("#cinematable").children().hide();
+           $("#halltable").children().hide();
+           $("#prjtable").children().show();
+          $("#addProj").show();
+            var table = $("#prjtable tbody");
+                console.log(data)
+             data.forEach(projection => {
+
+                                               var row = '<tr id=' + projection.id + '>' +
+                                                   '<td name="movie">' + projection.movieTitle + '</td>' +
+                                                    '<td name="duration">' + parseInt(projection.duration) + '</td>' +
+                                                   '<td name="cinema">' + projection.cinemaName + '</td>' +
+                                                   '<td name="genre" >' + projection.genre + '</td>' +
+                                                   '<td name="desc" >' + projection.desc + '</td>' +
+                                                   '<td name="date" >' + projection.time.slice(0,10) + '</td>' +
+                                                   '<td name="price" >' + parseInt(projection.price) + '</td>' +
+                                                    '<td name="vote" >' + parseFloat(projection.vote) + '</td>' +
+                                                     '<td name="seats" >' + parseInt(projection.notReservedSeats) + '</td>' +
+                                                     '<td name="hall" >' + projection.hallName + '</td>' +
+                                               '</tr>';
+                                               table.append(row);
+                                               })
         },
         error: function() {
             console.log('eror u dobavljanju sala')
@@ -166,6 +210,26 @@ $(".add-new").click(function(){
         $('[data-toggle="tooltip"]').tooltip();
 });
 
+//Add row for inserting new projection
+$(".addProjection").click(function(){
+        $(this).attr("disabled", "disabled");
+        var index = $("#prjtable tbody tr:last-child").index();
+        var row = '<tr>' +
+            '<td><input type="text" class="form-control" name="movie" id="movie"></input></td>' +
+             '<td><input type="text" disabled="true" class="form-control"/></td>' +
+                 '<td><input type="text" disabled="true" class="form-control" /></td>' +
+                     '<td><input type="text" disabled="true" class="form-control" /></td>' +
+                         '<td><input type="text" disabled="true" class="form-control" /></td>' +
+            '<td><input type="text" class="form-control" name="date" id="date"/></td>' +
+            '<td><input type="text" class="form-control"  id="price" name="price"/ ></td>' +
+             '<td><input type="text" disabled="true" class="form-control"/ ></td>' +
+                                     '<td><input type="text" disabled="true" class="form-control"/ ></td>' +
+             '<td><input type="text" name="hall"  class="form-control"/ ></td>' +
+                                     '<td><button type="button" id="saveProjBtn" class="btn btn-success">Add</button></td>'
+        '</tr>';
+        $("#prjtable tbody").append(row);
+});
+
 
     	// Add row on add button click
     $(document).on("click", ".add", function(){
@@ -213,5 +277,55 @@ $(".add-new").click(function(){
         }
     });
 
+//Add projection on save button
+$(document).on("click", "#saveProjBtn", function(){
+        var empty = false;
+        var input = $(this).parents("tr").find('input[type="text"]:not(:disabled)');
+        input.each(function(){
+
+            if(!$(this).val()){
+                $(this).addClass("error");
+                empty = true;
+            } else{
+                $(this).removeClass("error");
+            }
+        });
+        $(this).parents("tr").find(".error").first().focus();
+        if(!empty){
+        var field =  $(this)
+             $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8090/api/projection/" ,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        dateTime: $(this).parents("tr").find('input[name="date"]').val(),
+                        movie: $(this).parents("tr").find('input[name="movie"]').val(),
+                        price: $(this).parents("tr").find('input[name="price"]').val(),
+                        hall: $(this).parents("tr").find('input[name="hall"]').val(),
+                    }),
+                   success: function (projection) {
+                        console.log(projection)
+                        var row =  '<td name="movie">' + projection.movieTitle + '</td>' +
+                                                                            '<td name="duration">' + parseInt(projection.duration) + '</td>' +
+                                                                           '<td name="cinema">' + projection.cinemaName + '</td>' +
+                                                                           '<td name="genre" >' + projection.genre + '</td>' +
+                                                                           '<td name="desc" >' + projection.desc + '</td>' +
+                                                                           '<td name="date" >' + projection.time.slice(0,10) + '</td>' +
+                                                                           '<td name="price" >' + parseInt(projection.price) + '</td>' +
+                                                                            '<td name="vote" >' + parseFloat(projection.vote) + '</td>' +
+                                                                             '<td name="seats" >' + parseInt(projection.notReservedSeats) + '</td>' +
+                                                                             '<td name="hall" >' + projection.hallName + '</td>';
+                        field.parents("tr").html(row);
+
+
+                       $(".addProjection").removeAttr("disabled");
+                    },
+                    error: function() {
+                        console.log('eror')
+                    }
+                    })
+        }
+    });
 
 });

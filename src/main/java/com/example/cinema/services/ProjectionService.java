@@ -1,10 +1,8 @@
 package com.example.cinema.services;
 
+import com.example.cinema.dto.NewProjectionDTO;
 import com.example.cinema.dto.ProjectionDTO;
-import com.example.cinema.models.Projection;
-import com.example.cinema.models.Ticket;
-import com.example.cinema.models.User;
-import com.example.cinema.models.Vote;
+import com.example.cinema.models.*;
 import com.example.cinema.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +37,18 @@ public class ProjectionService {
     @Autowired
     private TicketRepository ticketRepository;
 
+    @Autowired
+    private HallRepository hallRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
     public List<ProjectionDTO> getAllProjections(){
         List<Projection> allProjections = projectionRepository.findAll();
         List<ProjectionDTO> responses = new ArrayList<>();
         for(Projection p: allProjections){
+            if (p.isDeleted())
+                continue;;
             ProjectionDTO response = new ProjectionDTO();
             response.setId(p.getId());
             response.setPrice(p.getPrice());
@@ -190,6 +196,84 @@ public class ProjectionService {
         return query_pairs;
     }
 
+    public ProjectionDTO create(NewProjectionDTO request) throws Exception {
+        MovieHall hall = hallRepository.getOne(request.getHall());
+        if (hall == null)
+            throw new Exception("Movie hall is not valid!");
+        Movie movie = movieRepository.findOneByTitle(request.getMovie());
+        if (movie == null)
+            throw new Exception("Movie id is not valid!");
+        Projection newProj = new Projection();
+        newProj.setDeleted(false);
+        newProj.setPrice(request.getPrice());
+        newProj.setDateTime(request.getDateTime());
+        int id = projectionRepository.findAll().size() + 1;
+        newProj.setId(id);
+        newProj.setMovie(movie);
+        newProj.setHall(hall);
+        newProj.setNotReservedSeats(hall.getCapacity());
+
+        projectionRepository.save(newProj);
+
+        ProjectionDTO response = new ProjectionDTO();
+        response.setId(newProj.getId());
+        response.setPrice(newProj.getPrice());
+        response.setTime(newProj.getDateTime());
+        response.setNotReservedSeats(newProj.getNotReservedSeats());
+        response.setHallId(newProj.getHall().getId());
+        response.setHallName(newProj.getHall().getLabel());
+        response.setCinemaName(newProj.getHall().getCinema().getName());
+        response.setMovieTitle(newProj.getMovie().getTitle());
+        response.setDuration(newProj.getMovie().getDuration());
+        response.setGenre(newProj.getMovie().getGenre());
+        response.setDesc(newProj.getMovie().getDescription());
+        response.setNotReservedSeats(newProj.getNotReservedSeats());
+        double sum = 0;
+        List<Vote> votes = voteRepository.findByMovie(newProj.getMovie());
+        for(Vote v: votes){
+            sum += v.getVote();
+        }
+        if (votes.size() > 0)
+            response.setVote(sum / votes.size());
+        else
+            response.setVote(sum);
+
+        return response;
+    }
 
 
+    public List<ProjectionDTO> getAllProjectionsByCinema(long id){
+        List<Projection> allProjections = projectionRepository.findAll();
+        List<ProjectionDTO> responses = new ArrayList<>();
+        for(Projection p: allProjections){
+            if (p.isDeleted())
+                continue;
+            if (p.getHall().getCinema().getId() != id)
+                continue;
+            ProjectionDTO response = new ProjectionDTO();
+            response.setId(p.getId());
+            response.setPrice(p.getPrice());
+            response.setTime(p.getDateTime());
+            response.setNotReservedSeats(p.getNotReservedSeats());
+            response.setHallId(p.getHall().getId());
+            response.setHallName(p.getHall().getLabel());
+            response.setCinemaName(p.getHall().getCinema().getName());
+            response.setMovieTitle(p.getMovie().getTitle());
+            response.setDuration(p.getMovie().getDuration());
+            response.setGenre(p.getMovie().getGenre());
+            response.setDesc(p.getMovie().getDescription());
+            response.setNotReservedSeats(p.getNotReservedSeats());
+            double sum = 0;
+            List<Vote> votes = voteRepository.findByMovie(p.getMovie());
+            for(Vote v: votes){
+                sum += v.getVote();
+            }
+            if (votes.size() > 0)
+                response.setVote(sum / votes.size());
+            else
+                response.setVote(sum);
+            responses.add(response);
+        }
+        return responses;
+    }
 }

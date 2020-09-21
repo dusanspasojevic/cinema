@@ -1,7 +1,9 @@
 $(document).ready(function() {
 const user = sessionStorage.getItem("username");
+var role = sessionStorage.getItem("role");
 if (!user)
     window.location.replace("http://localhost:8090/index.html");
+var reserveButton = role === "SPECTATOR" ? '<td class="reserve"><button type="button" class="btn btn-success">Reserve</button></td>': ''
         $.ajax({
             type: "GET",
             url: "http://localhost:8090/api/projection/",
@@ -19,7 +21,7 @@ if (!user)
                                         '<td name="price" >' + parseInt(projection.price) + '</td>' +
                                          '<td name="vote" >' + parseFloat(projection.vote) + '</td>' +
                                           '<td name="seats" >' + parseInt(projection.notReservedSeats) + '</td>' +
-                                            '<td class="reserve"><button type="button" class="btn btn-success">Reserve</button></td>' +
+                                            reserveButton +
                                     '</tr>';
                                     table.append(row);
                                     })
@@ -28,7 +30,6 @@ if (!user)
                 $("#message").text("Invalid credentials.");
             }
         })
-    var role = sessionStorage.getItem("role");
     var navbar = [];
     switch(role) {
     case "ADMIN" :  navbar =        '<li class="active"><a href="admin.html">Employees</a></li>' +
@@ -103,7 +104,7 @@ $( "#srcBtn" ).click(function() {
                                         '<td name="price" >' + projection.price + '</td>' +
                                          '<td name="vote" >' + projection.vote + '</td>' +
                                            '<td name="seats" >' + parseInt(projection.notReservedSeats) + '</td>' +
-                                          '<td class="reserve"><button type="button" class="btn btn-success">Reserve</button></td>' +
+                                        reserveButton +
                                     '</tr>';
                                     table.append(row);
                                     })

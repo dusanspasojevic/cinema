@@ -1,5 +1,6 @@
 package com.example.cinema.controllers;
 
+import com.example.cinema.dto.NewProjectionDTO;
 import com.example.cinema.dto.ProjectionDTO;
 import com.example.cinema.services.ProjectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ProjectionController {
 
     }
     @PostMapping("/reserve/{id}")
-    public ResponseEntity<?> reserveProjection(@PathVariable int id, HttpSession session) throws MalformedURLException, UnsupportedEncodingException {
+    public ResponseEntity<?> reserveProjection(@PathVariable int id, HttpSession session) {
         String role = (String) session.getAttribute("role");
         String username = (String) session.getAttribute("username");
 
@@ -43,6 +44,36 @@ public class ProjectionController {
             return new ResponseEntity<>("", HttpStatus.OK);
         else
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+
+    }
+
+    @PostMapping
+    public  ResponseEntity<?> createProjection(@RequestBody NewProjectionDTO request, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String username = (String) session.getAttribute("username");
+
+        if (role != null && !role.equals("MANAGER"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        try {
+            return new ResponseEntity<>(projectionService.create(request), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
+    @GetMapping("/cinema/{id}")
+    public ResponseEntity<?> getAllProjectionsByCinema(@PathVariable long id, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        String username = (String) session.getAttribute("username");
+
+        if (role != null && !role.equals("MANAGER"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+
+        return new ResponseEntity<>(projectionService.getAllProjectionsByCinema(id), HttpStatus.OK);
 
     }
 
