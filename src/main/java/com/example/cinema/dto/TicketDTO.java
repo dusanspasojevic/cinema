@@ -16,7 +16,7 @@ public class TicketDTO {
 
     private int movieDuration;
 
-    private long movieId;
+    private String movieId;
 
     private String movieGenre;
 
@@ -80,11 +80,11 @@ public class TicketDTO {
         this.movieDuration = movieDuration;
     }
 
-    public long getMovieId() {
+    public String getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(long movieId) {
+    public void setMovieId(String movieId) {
         this.movieId = movieId;
     }
 

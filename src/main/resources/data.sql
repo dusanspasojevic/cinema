@@ -27,39 +27,39 @@ insert into moviehalls(id, label, capacity, cinema_id, deleted) values
 
 
 insert into movies(title, description, duration, genre) values
-('Movie name1', 'Opis1', 60, 'KOMEDIJA'),
-('Movie 2', 'Opis2', 90, 'KOMEDIJA'),
-('Movie 3', 'Opis3', 95, 'AKCIJA'),
-('Movie 4', 'Opis4', 60, 'HOROR'),
-('Movie 5', 'Opis5', 65, 'TRILER' ),
-('Movie 7', 'Opis7', 90, 'AKCIJA'),
-('Movie 8', 'Opis8',80, 'NAUCNA FANTASTIKA');
+('Movie1', 'Opis1', 60, 'KOMEDIJA'),
+('Movie2', 'Opis2', 90, 'KOMEDIJA'),
+('Movie3', 'Opis3', 95, 'AKCIJA'),
+('Movie4', 'Opis4', 60, 'HOROR'),
+('Movie5', 'Opis5', 65, 'TRILER' ),
+('Movie7', 'Opis7', 90, 'AKCIJA'),
+('Movie8', 'Opis8',80, 'NAUCNA FANTASTIKA');
 
 insert into projections(id, date_time, not_reserved_seats, price, hall_id, movie_id, deleted) values
-(1, '2020-06-11T10:00:00', 50, 150, 1, 'Movie name1', 'false'),
-(2, '2020-10-11T11:30:00', 50, 200, 1, 'Movie name1', 'false'),
-(3, '2020-10-11T13:00:00', 50, 250, 1, 'Movie 2', 'false'),
-(4, '2020-11-11T15:00:00', 50, 250, 1, 'Movie 2', 'false'),
-(5, '2020-11-11T17:00:00', 50, 300, 1, 'Movie 2', 'false'),
-(6, '2020-11-11T19:00:00', 50, 350, 1, 'Movie 3', 'false'),
-(7, '2020-11-11T21:30:00', 50, 400, 1, 'Movie 3', 'false'),
+(1, '2020-06-11T10:00:00', 50, 150, 1, 'Movie1', 'false'),
+(2, '2020-10-11T11:30:00', 50, 200, 1, 'Movie1', 'false'),
+(3, '2020-10-11T13:00:00', 50, 250, 1, 'Movie2', 'false'),
+(4, '2020-11-11T15:00:00', 50, 250, 1, 'Movie2', 'false'),
+(5, '2020-11-11T17:00:00', 50, 300, 1, 'Movie2', 'false'),
+(6, '2020-11-11T19:00:00', 50, 350, 1, 'Movie3', 'false'),
+(7, '2020-11-11T21:30:00', 50, 400, 1, 'Movie3', 'false'),
 
-(8, '2020-09-11T13:30:00', 40, 200, 4, 'Movie 4', 'false'),
-(9, '2020-09-11T15:00:00', 40, 200, 4, 'Movie 4', 'false'),
-(10, '2020-09-11T16:30:00', 40, 250, 4, 'Movie 4', 'false'),
-(11, '2020-09-11T18:00:00', 40, 300, 4, 'Movie 7', 'false'),
-(12, '2020-09-11T20:00:00', 40, 350, 4, 'Movie 8', 'false'),
+(8, '2020-09-11T13:30:00', 40, 200, 4, 'Movie4', 'false'),
+(9, '2020-09-11T15:00:00', 40, 200, 4, 'Movie4', 'false'),
+(10, '2020-09-11T16:30:00', 40, 250, 4, 'Movie4', 'false'),
+(11, '2020-09-11T18:00:00', 40, 300, 4, 'Movie7', 'false'),
+(12, '2020-09-11T20:00:00', 40, 350, 4, 'Movie8', 'false'),
 
-(13, '2020-07-11T16:30:00', 10, 250, 5, 'Movie 5', 'false'),
-(14, '2020-07-11T19:00:00', 10, 300, 5, 'Movie 5', 'false'),
-(15, '2020-06-11T21:30:00', 10, 300, 5, 'Movie 4', 'false');
+(13, '2020-07-11T16:30:00', 10, 250, 5, 'Movie5', 'false'),
+(14, '2020-07-11T19:00:00', 10, 300, 5, 'Movie5', 'false'),
+(15, '2020-06-11T21:30:00', 10, 300, 5, 'Movie4', 'false');
 
 
 insert into votes(id, vote, movie_id, spectator_id) values
-(1, 1, 'Movie 5', 'sp1'),
-(2, 4, 'Movie name1', 'sp1'),
-(3, 3, 'Movie name1', 'sp2'),
-(4, 5, 'Movie 3', 'sp2');
+(1, 1, 'Movie5', 'sp1'),
+(2, 4, 'Movie1', 'sp1'),
+(3, 3, 'Movie1', 'sp2'),
+(4, 5, 'Movie3', 'sp2');
 
 insert into tickets(id, deleted, status, projection_id, spectator_id) values
 (1, 'false', 'RESERVED', 2, 'sp1'),

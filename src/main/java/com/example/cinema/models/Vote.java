@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Vote {
 
     @Id
-    private String id;
+    private int id;
 
     private int vote;
 
@@ -21,11 +21,11 @@ public class Vote {
     private Movie movie;
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,7 +55,7 @@ public class Vote {
 
     public Vote(){};
 
-    public Vote(String id, int vote, User spectator, Movie movie) {
+    public Vote(int id, int vote, User spectator, Movie movie) {
         this.id = id;
         this.vote = vote;
         this.spectator = spectator;

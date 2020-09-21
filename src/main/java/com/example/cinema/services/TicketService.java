@@ -51,6 +51,7 @@ public class TicketService {
             Movie movie = t.getProjection().getMovie();
             response.setMovieTitle(movie.getTitle());
             response.setMovieDuration(movie.getDuration());
+            response.setMovieId(movie.getTitle());
             response.setCinemaName(t.getProjection().getHall().getCinema().getName());
 
             Vote vote = voteRepository.findByMovieAndUser(movie.getTitle(), username);
