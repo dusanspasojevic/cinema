@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProjectionRepository extends JpaRepository<Projection, Long> {
+public interface ProjectionRepository extends JpaRepository<Projection, Integer> {
 
-    Projection findOneById(Long id);
+    Projection findOneById(int id);
 
     @Query(
             value = "SELECT * FROM projections p WHERE p.hall_id = ?1",

@@ -18,6 +18,8 @@ if (!user)
                                         '<td name="date" >' + projection.time.slice(0,10) + '</td>' +
                                         '<td name="price" >' + parseInt(projection.price) + '</td>' +
                                          '<td name="vote" >' + parseFloat(projection.vote) + '</td>' +
+                                          '<td name="seats" >' + parseInt(projection.notReservedSeats) + '</td>' +
+                                            '<td class="reserve"><button type="button" class="btn btn-success">Reserve</button></td>' +
                                     '</tr>';
                                     table.append(row);
                                     })
@@ -100,6 +102,8 @@ $( "#srcBtn" ).click(function() {
                                         '<td name="date" >' + projection.time.slice(0,10) + '</td>' +
                                         '<td name="price" >' + projection.price + '</td>' +
                                          '<td name="vote" >' + projection.vote + '</td>' +
+                                           '<td name="seats" >' + parseInt(projection.notReservedSeats) + '</td>' +
+                                          '<td class="reserve"><button type="button" class="btn btn-success">Reserve</button></td>' +
                                     '</tr>';
                                     table.append(row);
                                     })
@@ -110,6 +114,26 @@ $( "#srcBtn" ).click(function() {
         })
 
 });
+
+$(document).on("click", ".reserve", function(){
+const element = $(this)
+const id = element.parents("tr").attr("id");
+  $.ajax({
+         type: "POST",
+         url: "http://localhost:8090/api/projection/reserve/" + id,
+         success: function (data) {
+          alert('Successfully reserved projection!')
+           const column = $(`#${id}`).find('td[name="seats"]')
+            const number = parseInt(column.text()) - 1
+           element.html('<button type="button" class="btn btn-secondary" disabled>Reserved</button>');
+           column.html('<td name="seats" >' +  number + '</td>')
+         },
+         error: function(eror) {
+            console.log(eror)
+         }
+       })
+})
+
 
 });
 

@@ -2,6 +2,8 @@ package com.example.cinema.services;
 
 import com.example.cinema.dto.ProjectionDTO;
 import com.example.cinema.models.Projection;
+import com.example.cinema.models.Ticket;
+import com.example.cinema.models.User;
 import com.example.cinema.models.Vote;
 import com.example.cinema.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,12 @@ public class ProjectionService {
     @Autowired
     private HallRepository theaterRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
+
     public List<ProjectionDTO> getAllProjections(){
         List<Projection> allProjections = projectionRepository.findAll();
         List<ProjectionDTO> responses = new ArrayList<>();
@@ -47,6 +55,7 @@ public class ProjectionService {
             response.setDuration(p.getMovie().getDuration());
             response.setGenre(p.getMovie().getGenre());
             response.setDesc(p.getMovie().getDescription());
+            response.setNotReservedSeats(p.getNotReservedSeats());
             double sum = 0;
             List<Vote> votes = voteRepository.findByMovie(p.getMovie());
             for(Vote v: votes){
@@ -127,6 +136,7 @@ public class ProjectionService {
             response.setDuration(p.getMovie().getDuration());
             response.setGenre(p.getMovie().getGenre());
             response.setDesc(p.getMovie().getDescription());
+            response.setNotReservedSeats(p.getNotReservedSeats());
             double sum = 0;
             List<Vote> votes = voteRepository.findByMovie(p.getMovie());
             for(Vote v: votes){
@@ -141,7 +151,32 @@ public class ProjectionService {
         return responses;
     }
 
+    public boolean reserve(int projectionId, String username) {
+        User user = userRepository.findOneByUsername(username);
+        if (user == null)
+            return false;
+        Projection p = projectionRepository.findOneById(projectionId);
+        if (p == null)
+            return false;
+        if (p.getNotReservedSeats() == 0)
+            return false;
 
+        Ticket ticket = new Ticket();
+        ticket.setDeleted(false);
+        ticket.setStatus("RESERVED");
+        ticket.setProjection(p);
+        ticket.setSpectator(user);
+
+        List<Ticket> tickets = ticketRepository.findAll();
+        int id = tickets.size() + 1;
+        ticket.setId(id);
+        ticketRepository.save(ticket);
+
+        p.setNotReservedSeats(p.getNotReservedSeats() - 1);
+        projectionRepository.save(p);
+
+        return true;
+    }
 
     public static Map<String, String> splitQuery(URL url) throws UnsupportedEncodingException {
         Map<String, String> query_pairs = new LinkedHashMap<String, String>();
@@ -154,4 +189,7 @@ public class ProjectionService {
         }
         return query_pairs;
     }
+
+
+
 }
