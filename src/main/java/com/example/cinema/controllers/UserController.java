@@ -31,6 +31,20 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @PostMapping("/activate/{id}")
+    public ResponseEntity<?> register(@PathVariable String id, HttpSession session) {
+
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("ADMIN"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
+        if (userService.activate(id))
+            return new ResponseEntity<>("", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestParam(required = true) String username,
                                        @RequestParam(required = true) String password, HttpSession session) {
@@ -63,7 +77,12 @@ public class UserController {
     }
 
     @PostMapping("/managers")
-    public ResponseEntity<?> createManager(@RequestBody User request) throws Exception{
+    public ResponseEntity<?> createManager(@RequestBody User request, HttpSession session) throws Exception{
+        String role = (String) session.getAttribute("role");
+
+        if (role != null && !role.equals("ADMIN"))
+            return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
+
         Map<String, String> res = new HashMap<>();
         userService.createManager(request);
 

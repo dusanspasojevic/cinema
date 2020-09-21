@@ -47,12 +47,22 @@ public class UserService {
             response.setPassword(m.getPassword());
             response.setPhoneNumber(m.getPhoneNumber());
             response.setUsername(m.getUsername());
+            response.setActive(m.getActive());
             responses.add(response);
         }
 
         return responses;
     }
 
+    public boolean activate(String id) {
+        User user = userRepository.findOneByUsername(id);
+        if (user == null)
+            return false;
+        user.setActive(true);
+        userRepository.save(user);
+
+        return true;
+    }
 
     public boolean deleteUser(String id){
         User user = userRepository.findOneByUsername(id);
@@ -115,7 +125,6 @@ public class UserService {
             throw new Exception("Date is not valid.");
         }
         User user = new User();
-        user.setActive(true);
         user.setBirthDate(request.getBirthDate());
         user.setFirstName(request.getFirstName());
         user.setPassword(request.getPassword());
@@ -123,7 +132,12 @@ public class UserService {
         user.setLastName(request.getLastName());
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
-        user.setRole("SPECTATOR");
+        user.setRole(request.getRole());
+        if (user.getRole().equalsIgnoreCase("MANAGER")) {
+            user.setActive(false);
+        } else {
+            user.setActive(true);
+        }
         userRepository.save(user);
     }
 }

@@ -3,7 +3,8 @@ const user = sessionStorage.getItem("username");
 if (!user)
     window.location.replace("http://localhost:8090/index.html");
     $('[data-toggle="tooltip"]').tooltip();
-	var actions =  '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a><a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>'
+	var actions =   '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' +
+	                '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>'
     $.ajax({
                 type: "GET",
                 url: "http://localhost:8090/api/User/managers",
@@ -11,6 +12,9 @@ if (!user)
                 console.log(data)
                     data.forEach(user => {
                     var table = $("table tbody");
+
+                    const activate = user.active? '': '<a class="activate" title="Activate" data-toggle="tooltip"> <i class="fa fa-check-circle" style="color:green"></i></a>'
+                        console.log(activate)
                     var row = '<tr id=' + user.username + '>' +
                         '<td>' + user.firstName + '</td>' +
                         '<td>' + user.lastName + '</td>' +
@@ -19,8 +23,7 @@ if (!user)
                          '<td>' + user.username + '</td>' +
                           '<td>' + user.birthDate.slice(0,10) + '</td>' +
                           '<td>' + user.password + '</td>' +
-                         '<td>' +
-                         '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
+                         '<td>' + '<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></i></a>' + activate +
                          '</td>'
                     '</tr>';
                     table.append(row);
@@ -106,4 +109,21 @@ if (!user)
                         }
                     })
     });
+
+    // Activate manager on click
+    	$(document).on("click", ".activate", function(){
+    	    const element = $(this).parents("tr")
+    	    const id = element.attr("id")
+    		 $.ajax({
+                            type: "POST",
+                            url: "http://localhost:8090/api/User/activate/" + id,
+                            success: function (data) {
+                                alert("Manager account is active now.")
+                                element.find(".activate").remove()
+                               },
+                            error: function() {
+                            alert("Can't perform action.")
+                            }
+                        })
+        });
 });

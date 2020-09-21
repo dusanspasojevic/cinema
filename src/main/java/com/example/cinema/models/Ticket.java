@@ -14,7 +14,7 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spectator_id")
-    private Spectator spectator;
+    private User spectator;
 
     @Column
     private boolean deleted = false;
@@ -49,11 +49,11 @@ public class Ticket {
         this.projection = projection;
     }
 
-    public Spectator getSpectator() {
+    public User getSpectator() {
         return spectator;
     }
 
-    public void setSpectator(Spectator spectator) {
+    public void setSpectator(User spectator) {
         this.spectator = spectator;
     }
 
