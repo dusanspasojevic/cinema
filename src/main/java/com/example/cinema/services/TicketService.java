@@ -1,10 +1,7 @@
 package com.example.cinema.services;
 
 import com.example.cinema.dto.TicketDTO;
-import com.example.cinema.models.Movie;
-import com.example.cinema.models.Ticket;
-import com.example.cinema.models.User;
-import com.example.cinema.models.Vote;
+import com.example.cinema.models.*;
 import com.example.cinema.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +25,9 @@ public class TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private ProjectionRepository projectionRepository;
+
 
     public List<TicketDTO> getWatchedMovies(String username) throws Exception {
         User user = this.userRepository.getOne(username);
@@ -99,6 +99,9 @@ public class TicketService {
         t.setDeleted(true);
         ticketRepository.save(t);
 
+        Projection p = t.getProjection();
+        p.setNotReservedSeats(p.getNotReservedSeats() + 1);
+        projectionRepository.save(p);
         return true;
     }
 
